@@ -80,4 +80,11 @@ __recovery/
 
 # Boss dependency manager vendor folder https://github.com/HashLoad/boss
 modules/
-docs/.superpowers/
+docs/
+.superpowers/
+
+# Saida de build/execucao da suite de testes
+Test/bin/
+Test/dcu/
+Test/Test.res
+

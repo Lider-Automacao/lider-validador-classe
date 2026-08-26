@@ -1,0 +1,47 @@
+name: build-and-test
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    # GitHub-hosted runners nao tem RAD Studio instalado — este job precisa
+    # de um self-hosted runner Windows com RAD Studio (mesma versao usada
+    # pelo time) e licenca ja ativada na maquina. Troque a label abaixo pra
+    # bater com o runner registrado (Settings > Actions > Runners).
+    runs-on: [self-hosted, windows, delphi]
+
+    env:
+      # RAD Studio costuma expor essa variavel de ambiente na instalacao;
+      # ajuste se a maquina usa outra versao/edicao.
+      BDS: ${{ vars.BDS_PATH }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build da suite de testes (Test.dproj)
+        shell: cmd
+        run: |
+          call "%BDS%\bin\rsvars.bat"
+          msbuild Test\Test.dproj /t:Build /p:Config=Release /p:Platform=Win32
+
+      - name: Rodar testes (DUnitX console)
+        shell: cmd
+        # Config=Release ja define CI no .dproj — o Test.dpr usa
+        # {$IFNDEF CI} pra pular o "pressione Enter" e propaga falha via
+        # System.ExitCode, entao o exit code do processo já reflete o
+        # resultado (0 = tudo passou, 1 = alguma falha).
+        run: |
+          Test\bin\Win32\Release\Test.exe
+
+      - name: Publicar resultado (nunit.xml)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dunitx-results
+          path: nunit.xml
+          if-no-files-found: warn
