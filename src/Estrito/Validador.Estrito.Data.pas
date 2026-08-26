@@ -8,7 +8,24 @@ uses
   Validador.Estrito.Types;
 
 type
-  TValidadorData = class
+  IValidadorData = interface
+    ['{C5DEBF89-0BBC-4CC1-835B-EBEC3AF989FC}']
+    function Requerido(aMensagem: string = ''): IValidadorData;
+    function Nullable: IValidadorData;
+
+    function MaiorQue(const aComparacao: TDateTime; aMensagem: string = ''): IValidadorData;
+    function MaiorQueOuIgual(const aComparacao: TDateTime; aMensagem: string = ''): IValidadorData;
+    function MenorQue(const aComparacao: TDateTime; aMensagem: string = ''): IValidadorData;
+    function MenorQueOuIgual(const aComparacao: TDateTime; aMensagem: string = ''): IValidadorData;
+    function Entre(const aMinimo, aMaximo: TDateTime; aMensagem: string = ''): IValidadorData;
+    function Igual(const aComparacao: TDateTime; aMensagem: string = ''): IValidadorData;
+
+    function Valida(const aValor: TNullable<TDateTime>): IValidadorData;
+    function Valido: Boolean;
+    function Mensagem: string;
+  end;
+
+  TValidadorData = class(TInterfacedObject, IValidadorData)
   private
     FRegras: TList<IValidacaoEstrita<TDateTime>>;
     FRequerido: Boolean;
@@ -16,19 +33,19 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    class function New: TValidadorData;
+    class function New: IValidadorData;
 
-    function Requerido(aMensagem: string = ''): TValidadorData;
-    function Nullable: TValidadorData;
+    function Requerido(aMensagem: string = ''): IValidadorData;
+    function Nullable: IValidadorData;
 
-    function MaiorQue(const aComparacao: TDateTime; aMensagem: string = ''): TValidadorData;
-    function MaiorQueOuIgual(const aComparacao: TDateTime; aMensagem: string = ''): TValidadorData;
-    function MenorQue(const aComparacao: TDateTime; aMensagem: string = ''): TValidadorData;
-    function MenorQueOuIgual(const aComparacao: TDateTime; aMensagem: string = ''): TValidadorData;
-    function Entre(const aMinimo, aMaximo: TDateTime; aMensagem: string = ''): TValidadorData;
-    function Igual(const aComparacao: TDateTime; aMensagem: string = ''): TValidadorData;
+    function MaiorQue(const aComparacao: TDateTime; aMensagem: string = ''): IValidadorData;
+    function MaiorQueOuIgual(const aComparacao: TDateTime; aMensagem: string = ''): IValidadorData;
+    function MenorQue(const aComparacao: TDateTime; aMensagem: string = ''): IValidadorData;
+    function MenorQueOuIgual(const aComparacao: TDateTime; aMensagem: string = ''): IValidadorData;
+    function Entre(const aMinimo, aMaximo: TDateTime; aMensagem: string = ''): IValidadorData;
+    function Igual(const aComparacao: TDateTime; aMensagem: string = ''): IValidadorData;
 
-    function Valida(const aValor: TNullable<TDateTime>): TValidadorData;
+    function Valida(const aValor: TNullable<TDateTime>): IValidadorData;
     function Valido: Boolean;
     function Mensagem: string;
   end;
@@ -51,61 +68,61 @@ begin
   inherited;
 end;
 
-class function TValidadorData.New: TValidadorData;
+class function TValidadorData.New: IValidadorData;
 begin
   Result := TValidadorData.Create;
 end;
 
-function TValidadorData.Requerido(aMensagem: string): TValidadorData;
+function TValidadorData.Requerido(aMensagem: string): IValidadorData;
 begin
   FRequerido := True;
   FRegras.Add(TValidacaoEstritaRequerido<TDateTime>.New.Mensagem(aMensagem).Requerido(True));
   Result := Self;
 end;
 
-function TValidadorData.Nullable: TValidadorData;
+function TValidadorData.Nullable: IValidadorData;
 begin
   FRequerido := False;
   Result := Self;
 end;
 
-function TValidadorData.MaiorQue(const aComparacao: TDateTime; aMensagem: string): TValidadorData;
+function TValidadorData.MaiorQue(const aComparacao: TDateTime; aMensagem: string): IValidadorData;
 begin
   FRegras.Add(TValidacaoEstritaMaiorQue<TDateTime>.New(aComparacao).Mensagem(aMensagem).Requerido(FRequerido));
   Result := Self;
 end;
 
-function TValidadorData.MaiorQueOuIgual(const aComparacao: TDateTime; aMensagem: string): TValidadorData;
+function TValidadorData.MaiorQueOuIgual(const aComparacao: TDateTime; aMensagem: string): IValidadorData;
 begin
   FRegras.Add(TValidacaoEstritaMaiorOuIgualQue<TDateTime>.New(aComparacao).Mensagem(aMensagem).Requerido(FRequerido));
   Result := Self;
 end;
 
-function TValidadorData.MenorQue(const aComparacao: TDateTime; aMensagem: string): TValidadorData;
+function TValidadorData.MenorQue(const aComparacao: TDateTime; aMensagem: string): IValidadorData;
 begin
   FRegras.Add(TValidacaoEstritaMenorQue<TDateTime>.New(aComparacao).Mensagem(aMensagem).Requerido(FRequerido));
   Result := Self;
 end;
 
-function TValidadorData.MenorQueOuIgual(const aComparacao: TDateTime; aMensagem: string): TValidadorData;
+function TValidadorData.MenorQueOuIgual(const aComparacao: TDateTime; aMensagem: string): IValidadorData;
 begin
   FRegras.Add(TValidacaoEstritaMenorOuIgualQue<TDateTime>.New(aComparacao).Mensagem(aMensagem).Requerido(FRequerido));
   Result := Self;
 end;
 
-function TValidadorData.Entre(const aMinimo, aMaximo: TDateTime; aMensagem: string): TValidadorData;
+function TValidadorData.Entre(const aMinimo, aMaximo: TDateTime; aMensagem: string): IValidadorData;
 begin
   FRegras.Add(TValidacaoEstritaEntre<TDateTime>.New(aMinimo, aMaximo).Mensagem(aMensagem).Requerido(FRequerido));
   Result := Self;
 end;
 
-function TValidadorData.Igual(const aComparacao: TDateTime; aMensagem: string): TValidadorData;
+function TValidadorData.Igual(const aComparacao: TDateTime; aMensagem: string): IValidadorData;
 begin
   FRegras.Add(TValidacaoEstritaIgual<TDateTime>.New(aComparacao).Mensagem(aMensagem).Requerido(FRequerido));
   Result := Self;
 end;
 
-function TValidadorData.Valida(const aValor: TNullable<TDateTime>): TValidadorData;
+function TValidadorData.Valida(const aValor: TNullable<TDateTime>): IValidadorData;
 var
   LRegra: IValidacaoEstrita<TDateTime>;
 begin

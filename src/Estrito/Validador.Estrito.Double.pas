@@ -7,7 +7,24 @@ uses
   Validador.Estrito.Types;
 
 type
-  TValidadorDouble = class
+  IValidadorDouble = interface
+    ['{64AC9DFC-1BD3-404A-AD39-32ED1D3C8069}']
+    function Requerido(aMensagem: string = ''): IValidadorDouble;
+    function Nullable: IValidadorDouble;
+
+    function MaiorQue(const aComparacao: Double; aMensagem: string = ''): IValidadorDouble;
+    function MaiorQueOuIgual(const aComparacao: Double; aMensagem: string = ''): IValidadorDouble;
+    function MenorQue(const aComparacao: Double; aMensagem: string = ''): IValidadorDouble;
+    function MenorQueOuIgual(const aComparacao: Double; aMensagem: string = ''): IValidadorDouble;
+    function Entre(const aMinimo, aMaximo: Double; aMensagem: string = ''): IValidadorDouble;
+    function Igual(const aComparacao: Double; aMensagem: string = ''): IValidadorDouble;
+
+    function Valida(const aValor: TNullable<Double>): IValidadorDouble;
+    function Valido: Boolean;
+    function Mensagem: string;
+  end;
+
+  TValidadorDouble = class(TInterfacedObject, IValidadorDouble)
   private
     FRegras: TList<IValidacaoEstrita<Double>>;
     FRequerido: Boolean;
@@ -15,19 +32,19 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    class function New: TValidadorDouble;
+    class function New: IValidadorDouble;
 
-    function Requerido(aMensagem: string = ''): TValidadorDouble;
-    function Nullable: TValidadorDouble;
+    function Requerido(aMensagem: string = ''): IValidadorDouble;
+    function Nullable: IValidadorDouble;
 
-    function MaiorQue(const aComparacao: Double; aMensagem: string = ''): TValidadorDouble;
-    function MaiorQueOuIgual(const aComparacao: Double; aMensagem: string = ''): TValidadorDouble;
-    function MenorQue(const aComparacao: Double; aMensagem: string = ''): TValidadorDouble;
-    function MenorQueOuIgual(const aComparacao: Double; aMensagem: string = ''): TValidadorDouble;
-    function Entre(const aMinimo, aMaximo: Double; aMensagem: string = ''): TValidadorDouble;
-    function Igual(const aComparacao: Double; aMensagem: string = ''): TValidadorDouble;
+    function MaiorQue(const aComparacao: Double; aMensagem: string = ''): IValidadorDouble;
+    function MaiorQueOuIgual(const aComparacao: Double; aMensagem: string = ''): IValidadorDouble;
+    function MenorQue(const aComparacao: Double; aMensagem: string = ''): IValidadorDouble;
+    function MenorQueOuIgual(const aComparacao: Double; aMensagem: string = ''): IValidadorDouble;
+    function Entre(const aMinimo, aMaximo: Double; aMensagem: string = ''): IValidadorDouble;
+    function Igual(const aComparacao: Double; aMensagem: string = ''): IValidadorDouble;
 
-    function Valida(const aValor: TNullable<Double>): TValidadorDouble;
+    function Valida(const aValor: TNullable<Double>): IValidadorDouble;
     function Valido: Boolean;
     function Mensagem: string;
   end;
@@ -50,61 +67,61 @@ begin
   inherited;
 end;
 
-class function TValidadorDouble.New: TValidadorDouble;
+class function TValidadorDouble.New: IValidadorDouble;
 begin
   Result := TValidadorDouble.Create;
 end;
 
-function TValidadorDouble.Requerido(aMensagem: string): TValidadorDouble;
+function TValidadorDouble.Requerido(aMensagem: string): IValidadorDouble;
 begin
   FRequerido := True;
   FRegras.Add(TValidacaoEstritaRequerido<Double>.New.Mensagem(aMensagem).Requerido(True));
   Result := Self;
 end;
 
-function TValidadorDouble.Nullable: TValidadorDouble;
+function TValidadorDouble.Nullable: IValidadorDouble;
 begin
   FRequerido := False;
   Result := Self;
 end;
 
-function TValidadorDouble.MaiorQue(const aComparacao: Double; aMensagem: string): TValidadorDouble;
+function TValidadorDouble.MaiorQue(const aComparacao: Double; aMensagem: string): IValidadorDouble;
 begin
   FRegras.Add(TValidacaoEstritaMaiorQue<Double>.New(aComparacao).Mensagem(aMensagem).Requerido(FRequerido));
   Result := Self;
 end;
 
-function TValidadorDouble.MaiorQueOuIgual(const aComparacao: Double; aMensagem: string): TValidadorDouble;
+function TValidadorDouble.MaiorQueOuIgual(const aComparacao: Double; aMensagem: string): IValidadorDouble;
 begin
   FRegras.Add(TValidacaoEstritaMaiorOuIgualQue<Double>.New(aComparacao).Mensagem(aMensagem).Requerido(FRequerido));
   Result := Self;
 end;
 
-function TValidadorDouble.MenorQue(const aComparacao: Double; aMensagem: string): TValidadorDouble;
+function TValidadorDouble.MenorQue(const aComparacao: Double; aMensagem: string): IValidadorDouble;
 begin
   FRegras.Add(TValidacaoEstritaMenorQue<Double>.New(aComparacao).Mensagem(aMensagem).Requerido(FRequerido));
   Result := Self;
 end;
 
-function TValidadorDouble.MenorQueOuIgual(const aComparacao: Double; aMensagem: string): TValidadorDouble;
+function TValidadorDouble.MenorQueOuIgual(const aComparacao: Double; aMensagem: string): IValidadorDouble;
 begin
   FRegras.Add(TValidacaoEstritaMenorOuIgualQue<Double>.New(aComparacao).Mensagem(aMensagem).Requerido(FRequerido));
   Result := Self;
 end;
 
-function TValidadorDouble.Entre(const aMinimo, aMaximo: Double; aMensagem: string): TValidadorDouble;
+function TValidadorDouble.Entre(const aMinimo, aMaximo: Double; aMensagem: string): IValidadorDouble;
 begin
   FRegras.Add(TValidacaoEstritaEntre<Double>.New(aMinimo, aMaximo).Mensagem(aMensagem).Requerido(FRequerido));
   Result := Self;
 end;
 
-function TValidadorDouble.Igual(const aComparacao: Double; aMensagem: string): TValidadorDouble;
+function TValidadorDouble.Igual(const aComparacao: Double; aMensagem: string): IValidadorDouble;
 begin
   FRegras.Add(TValidacaoEstritaIgual<Double>.New(aComparacao).Mensagem(aMensagem).Requerido(FRequerido));
   Result := Self;
 end;
 
-function TValidadorDouble.Valida(const aValor: TNullable<Double>): TValidadorDouble;
+function TValidadorDouble.Valida(const aValor: TNullable<Double>): IValidadorDouble;
 var
   LRegra: IValidacaoEstrita<Double>;
 begin

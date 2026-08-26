@@ -47,7 +47,7 @@ end;
 
 procedure TTesteValidadorString.Test_Mensagem_PrimeiraFalhaEhARetornada;
 var
-  LValidador: TValidadorString;
+  LValidador: IValidadorString;
 begin
   LValidador := TValidadorString.New.Requerido('Nome é obrigatório').NaoVazio('Nome não pode ser vazio');
   LValidador.Valida(TNullable<string>.Empty);
