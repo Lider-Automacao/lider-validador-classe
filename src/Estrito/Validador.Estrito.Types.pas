@@ -27,7 +27,7 @@ type
   IValidacaoEstrita<T> = interface(IValidacaoEstritaBase)
     ['{4FAEC098-519E-42E2-A797-6285848FD0BA}']
     function Requerido(const aRequerido: Boolean): IValidacaoEstrita<T>;
-    function Propriedade(const aPropriedade: string): IValidacaoEstrita<T>;
+    function Propriedade(const aPropriedade: string): IValidacaoEstrita<T>; overload;
     function Valida(const aValue: TNullable<T>): IValidacaoEstrita<T>;
     function Mensagem(const aMensagem: string): IValidacaoEstrita<T>; overload;
   end;

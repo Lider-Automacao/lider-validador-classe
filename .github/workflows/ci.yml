@@ -38,10 +38,10 @@ jobs:
         run: |
           Test\bin\Win32\Release\Test.exe
 
-      - name: Publicar resultado (nunit.xml)
+      - name: Publicar resultado (dunitx-results.xml)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: dunitx-results
-          path: nunit.xml
+          path: Test\bin\Win32\Release\dunitx-results.xml
           if-no-files-found: warn

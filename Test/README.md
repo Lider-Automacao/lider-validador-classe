@@ -4,7 +4,7 @@ Suíte DUnitX cobrindo as duas trilhas do pacote:
 
 - **`Legado/`** (`src/Legado/`) — a API `Variant`-based original
   (`TValidador`, `TValidacaoXxx`), agora `deprecated` (remoção planejada
-  pra v2.0). 23 arquivos de teste, ~120 casos, incluindo a matriz
+  pra v2.0). 22 arquivos de teste, ~120 casos, incluindo a matriz
   **Requerido × Null × Vazio × Preenchido** em cada validador — exatamente
   onde viveram os bugs corrigidos nesta sessão (ver
   `VALIDADOR_NAOESTAVAZIO_NULLABLE_AUSENTE_BUG.md` e o laudo técnico).
@@ -15,7 +15,7 @@ Suíte DUnitX cobrindo as duas trilhas do pacote:
   delas). 21 arquivos de teste. Spec:
   `docs/superpowers/specs/2026-08-26-trilha-estrita-design.md`.
 
-44 arquivos de teste no total.
+43 arquivos de teste no total.
 
 ## Pré-requisitos
 
@@ -38,7 +38,8 @@ bin\Win32\Release\Test.exe
 ```
 
 O executável roda no console, imprime resultado por `[Test]` e também
-grava `nunit.xml` (via `DUnitX.Loggers.Xml.NUnit`) pra integrar com CI.
+grava `dunitx-results.xml` na mesma pasta do executável (via
+`DUnitX.Loggers.Xml.NUnit`) pra integrar com CI.
 Se o RAD Studio suportar TestInsight, ele é usado automaticamente
 (`{$IFDEF TESTINSIGHT}`) no lugar do runner de console.
 

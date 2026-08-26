@@ -3,6 +3,7 @@
 interface
 
 uses
+  System.SysUtils,
   DUnitX.TestFramework,
   Validador.Estrito.Types,
   Validador.Estrito.Objeto;
