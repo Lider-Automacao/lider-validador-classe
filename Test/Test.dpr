@@ -38,6 +38,7 @@ uses
   Validador.Tamanho in '..\src\Legado\Validador.Tamanho.pas',
   Validador.Entre in '..\src\Legado\Validador.Entre.pas',
   Validador.DataString in '..\src\Legado\Validador.DataString.pas',
+  Validador.Estrito.Types in '..\src\Estrito\Validador.Estrito.Types.pas',
 
   // Units de teste
   Teste.Validador in 'src\Teste.Validador.pas',
@@ -61,7 +62,8 @@ uses
   Teste.Validador.CEP in 'src\Teste.Validador.CEP.pas',
   Teste.Validador.Tamanho in 'src\Teste.Validador.Tamanho.pas',
   Teste.Validador.Entre in 'src\Teste.Validador.Entre.pas',
-  Teste.Validador.DataString in 'src\Teste.Validador.DataString.pas';
+  Teste.Validador.DataString in 'src\Teste.Validador.DataString.pas',
+  Teste.Validador.Estrito.Types in 'src\Teste.Validador.Estrito.Types.pas';
 
 var
   runner: ITestRunner;
