@@ -27,7 +27,44 @@ repositório):
 boss install github.com/<org>/lider-validador-classe
 ```
 
-## Uso básico
+**Atenção:** o código-fonte vive em duas pastas (`src/Legado/` e
+`src/Estrito/`, ver seção "Duas trilhas" abaixo). `boss.json`'s `mainsrc`
+só aceita **um** caminho e o search path do Delphi não é recursivo, então
+o `boss install` sozinho não resolve as duas pastas — depois de instalar,
+adicione **as duas** manualmente em **Project > Options > Search Path**
+do seu projeto:
+
+```
+modules\lider-validador-classe\src\Legado
+modules\lider-validador-classe\src\Estrito
+```
+
+(ajuste o caminho base conforme onde o Boss instalou o pacote no seu
+projeto).
+
+## Duas trilhas
+
+- **`Legado/`** — a API `Variant`-based original (exemplos abaixo). Ainda
+  funciona, mas está `deprecated` — remoção planejada pra v2.0.
+- **`Estrito/`** — API nova, sem `Variant`, com segurança de tipo checada
+  em compile-time (`TValidadorString`, `TValidadorInteiro`,
+  `TValidadorInt64`, `TValidadorDouble`, `TValidadorData`). Recomendada
+  pra código novo. Exemplo:
+
+  ```pascal
+  uses
+    Validador.Estrito.String;
+
+  if not TValidadorString.New.Requerido.CPF.Valida(pDto.CPF).Valido then
+    raise Exception.Create('CPF inválido');
+  ```
+
+  Valida **um valor por vez** (não agrega múltiplos campos num JSON como
+  o `TValidador` legado) — ver
+  `docs/superpowers/specs/2026-08-26-trilha-estrita-design.md` pro design
+  completo.
+
+## Uso básico (trilha legada)
 
 Toda validação começa em `TValidador.New`, encadeia `.Add(propriedade, valor)`
 e uma ou mais regras, e fecha o campo com `.&End`. Depois de `.End`, o
