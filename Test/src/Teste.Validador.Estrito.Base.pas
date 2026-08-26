@@ -58,7 +58,7 @@ end;
 
 procedure TTesteValidacaoEstritaBase.Test_Propriedade_DevolveValorAtribuido;
 var
-  LValidacao: TValidacaoEstritaTeste;
+  LValidacao: IValidacaoEstrita<Integer>;
 begin
   LValidacao := TValidacaoEstritaTeste.Create;
   LValidacao.Propriedade('idade');
@@ -67,7 +67,7 @@ end;
 
 procedure TTesteValidacaoEstritaBase.Test_Mensagem_SemOverride_DevolveMensagemDoConstrutor;
 var
-  LValidacao: TValidacaoEstritaTeste;
+  LValidacao: IValidacaoEstrita<Integer>;
 begin
   LValidacao := TValidacaoEstritaTeste.Create;
   Assert.AreEqual('mensagem padrao', LValidacao.Mensagem);
@@ -75,7 +75,7 @@ end;
 
 procedure TTesteValidacaoEstritaBase.Test_Mensagem_ComOverrideNaoVazio_Sobrescreve;
 var
-  LValidacao: TValidacaoEstritaTeste;
+  LValidacao: IValidacaoEstrita<Integer>;
 begin
   LValidacao := TValidacaoEstritaTeste.Create;
   LValidacao.Mensagem('mensagem customizada');
@@ -84,7 +84,7 @@ end;
 
 procedure TTesteValidacaoEstritaBase.Test_VerificaErro_ValidoFalso_LancaTValidadorException;
 var
-  LValidacao: TValidacaoEstritaTeste;
+  LValidacao: IValidacaoEstrita<Integer>;
 begin
   LValidacao := TValidacaoEstritaTeste.Create;
   LValidacao.Valida(TNullable<Integer>.Empty);
@@ -97,7 +97,7 @@ end;
 
 procedure TTesteValidacaoEstritaBase.Test_VerificaErro_ValidoTrue_NaoLanca;
 var
-  LValidacao: TValidacaoEstritaTeste;
+  LValidacao: IValidacaoEstrita<Integer>;
 begin
   LValidacao := TValidacaoEstritaTeste.Create;
   LValidacao.Valida(TNullable<Integer>.Create(5));
