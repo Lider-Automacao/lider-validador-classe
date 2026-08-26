@@ -55,7 +55,7 @@ type
     function Executa: IExecutorValidador;
   end deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0';
 
-  TValidador = class(TInterfacedObject, IValidador, IValidadorAdd, INullValidador) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
+  TValidador = class(TInterfacedObject, IValidador, IValidadorAdd, INullValidador)
   private
     FValidador: IExecutorValidador;
     FValue: variant;
@@ -101,7 +101,7 @@ type
 
     constructor Create;
     class function New: IValidadorAdd;
-  end;
+  end deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0';
 
 implementation
 

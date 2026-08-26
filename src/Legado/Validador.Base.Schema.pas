@@ -6,14 +6,14 @@ uses
   Validador.Types, Validador, Validador.Base;
 
 type
-  TValidacaoSchemaBase<T> = class(TValidacaoBase<T>) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
+  TValidacaoSchemaBase<T> = class(TValidacaoBase<T>)
   protected
     FValidador: IValidadorAdd;
   public
     function Valida(const aValue: T): IValidacao<T>; override;
     function MontaValidador: IValidadorAdd; virtual; abstract;
     function Valido: Boolean; override;
-  end;
+  end deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0';
 
 implementation
 

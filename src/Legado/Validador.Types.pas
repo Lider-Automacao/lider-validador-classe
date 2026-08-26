@@ -34,7 +34,7 @@ type
   TValidadorException = class(Exception)
   end;
 
-  TExecutorValidador = class(TInterfacedObject, IExecutorValidador) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
+  TExecutorValidador = class(TInterfacedObject, IExecutorValidador)
   private
     FValidacoes: TInterfaceList;
   public
@@ -49,7 +49,7 @@ type
 
     class function New: IExecutorValidador;
     destructor Destroy; override;
-  end;
+  end deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0';
 
 implementation
 

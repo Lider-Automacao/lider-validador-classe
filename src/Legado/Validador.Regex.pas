@@ -8,7 +8,7 @@ uses
   Validador.Base;
 
 type
-  TValidacaoRegex = class(TValidacaoBase<Variant>) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
+  TValidacaoRegex = class(TValidacaoBase<Variant>)
   private
     FRegex: String;
   public
@@ -16,7 +16,7 @@ type
     function Valido: Boolean; override;
     function Valida(const aValue: Variant): IValidacao<Variant>; override;
     class function New(aRegex: String): IValidacao<Variant>;
-  end;
+  end deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0';
 
 implementation
 

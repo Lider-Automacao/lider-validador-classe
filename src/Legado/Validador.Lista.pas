@@ -10,7 +10,7 @@ uses
 
 type
   TValidacaoLista<T: class, constructor> = class
-    (TValidacaoBase < TObjectList < T >> ) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
+    (TValidacaoBase < TObjectList < T >> )
   private
     [week]
     FValidacao: IValidacao<T>;
@@ -19,7 +19,7 @@ type
     constructor Create(const aValidacao: IValidacao<T>); reintroduce;
     class function New(const aValidacao: IValidacao<T>)
       : IValidacao<TObjectList<T>>;
-  end;
+  end deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0';
 
 implementation
 

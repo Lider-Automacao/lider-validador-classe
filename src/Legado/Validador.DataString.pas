@@ -7,12 +7,12 @@ uses
   Validador.Base;
 
 type
-  TValidacaoDataString = class(TValidacaoBase<Variant>) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
+  TValidacaoDataString = class(TValidacaoBase<Variant>)
   public
     constructor Create; reintroduce;
     function Valido: Boolean; override;
     class function New: IValidacao<Variant>;
-  end;
+  end deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0';
 
 implementation
 

@@ -6,7 +6,7 @@ uses
   Validador.Types;
 
 type
-  TValidacaoBase<T> = class(TInterfacedObject, IValidacao<T>) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
+  TValidacaoBase<T> = class(TInterfacedObject, IValidacao<T>)
   protected
     FRequerido: Boolean;
     FMensagem: string;
@@ -22,7 +22,7 @@ type
     constructor Create(const aMensagem: string); virtual;
     function Mensagem: string; overload;
     function Propriedade: string; overload;
-  end;
+  end deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0';
 
 
 implementation

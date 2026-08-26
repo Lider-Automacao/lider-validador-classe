@@ -7,14 +7,14 @@ uses
   Validador.Base;
 
 type
-  TValidacaoCPF = class(TValidacaoBase<Variant>) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
+  TValidacaoCPF = class(TValidacaoBase<Variant>)
   private
     function ValidaDigitos(const ACPF: string): Boolean;
   public
     constructor Create; reintroduce;
     function Valido: Boolean; override;
   class  function New: IValidacao<Variant>;
-  end;
+  end deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0';
 
 implementation
 

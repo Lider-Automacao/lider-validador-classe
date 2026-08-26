@@ -7,23 +7,23 @@ uses
   Validador.Base;
 
 type
-  TValidacaoTamanhoMinimo = class(TValidacaoBase<Variant>) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
+  TValidacaoTamanhoMinimo = class(TValidacaoBase<Variant>)
   private
     FTamanho: Integer;
   public
     constructor Create(aTamanho: Integer); reintroduce;
     function Valido: Boolean; override;
     class function New(aTamanho: Integer): IValidacao<Variant>;
-  end;
+  end deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0';
 
-  TValidacaoTamanhoMaximo = class(TValidacaoBase<Variant>) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
+  TValidacaoTamanhoMaximo = class(TValidacaoBase<Variant>)
   private
     FTamanho: Integer;
   public
     constructor Create(aTamanho: Integer); reintroduce;
     function Valido: Boolean; override;
     class function New(aTamanho: Integer): IValidacao<Variant>;
-  end;
+  end deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0';
 
 implementation
 

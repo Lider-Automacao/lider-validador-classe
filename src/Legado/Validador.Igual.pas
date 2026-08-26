@@ -8,7 +8,7 @@ uses
   Validador.Base;
 
 type
-  TValidacaoIgual = class(TValidacaoBase<Variant>) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
+  TValidacaoIgual = class(TValidacaoBase<Variant>)
   private
     FComparador: Variant;
   public
@@ -16,7 +16,7 @@ type
     function Valido: Boolean; override;
     function Valida(const aValue: Variant): IValidacao<Variant>; override;
     class function New(aComparador: Variant): IValidacao<Variant>;
-  end;
+  end deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0';
 
 implementation
 

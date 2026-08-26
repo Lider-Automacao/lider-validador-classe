@@ -9,14 +9,14 @@ uses
 
 type
   TEnumValues = Array of string;
-  TValidacaoEnum = class(TValidacaoBase<Variant>) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
+  TValidacaoEnum = class(TValidacaoBase<Variant>)
   private
     FEnumValues: TEnumValues;
   public
     constructor Create(aEnum: TEnumValues); reintroduce;
     function Valido: Boolean; override;
     class function New(aEnum: TEnumValues): IValidacao<Variant>;
-  end;
+  end deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0';
 
 implementation
 

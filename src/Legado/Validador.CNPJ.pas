@@ -7,7 +7,7 @@ uses
   Validador.Base;
 
 type
-  TValidacaoCNPJ = class(TValidacaoBase<Variant>) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
+  TValidacaoCNPJ = class(TValidacaoBase<Variant>)
   private
     function TodosCaracteresIguais(const ACNPJ: string): Boolean;
     function ValidaDigitos(const ACNPJ: string): Boolean;
@@ -15,7 +15,7 @@ type
     constructor Create; reintroduce;
     function Valido: Boolean; override;
     class function New: IValidacao<Variant>;
-  end;
+  end deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0';
 
 implementation
 

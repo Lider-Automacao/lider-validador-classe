@@ -8,23 +8,23 @@ uses
   Validador.Base;
 
 type
-  TValidacaoMenorQue = class(TValidacaoBase<variant>) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
+  TValidacaoMenorQue = class(TValidacaoBase<variant>)
   private
     FComparador: variant;
   public
     function Valido: Boolean; override;
     constructor Create(aComparador: variant); reintroduce;
     class function New(aComparador: variant): IValidacao<variant>;
-  end;
+  end deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0';
 
-  TValidacaoMenorOuIgualQue = class(TValidacaoBase<variant>) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
+  TValidacaoMenorOuIgualQue = class(TValidacaoBase<variant>)
   private
     FComparador: variant;
   public
     function Valido: Boolean; override;
     constructor Create(aComparador: variant); reintroduce;
     class function New(aComparador: variant): IValidacao<variant>;
-  end;
+  end deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0';
 
 implementation
 
