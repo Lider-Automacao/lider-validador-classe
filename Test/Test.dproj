@@ -95,6 +95,10 @@
     <DCCReference Include="..\src\Estrito\Validador.Estrito.CNPJ.pas"/>
     <DCCReference Include="..\src\Estrito\Validador.Estrito.Objeto.pas"/>
     <DCCReference Include="..\src\Estrito\Validador.Estrito.String.pas"/>
+    <DCCReference Include="..\src\Estrito\Validador.Estrito.Inteiro.pas"/>
+    <DCCReference Include="..\src\Estrito\Validador.Estrito.Int64.pas"/>
+    <DCCReference Include="..\src\Estrito\Validador.Estrito.Double.pas"/>
+    <DCCReference Include="..\src\Estrito\Validador.Estrito.Data.pas"/>
     <DCCReference Include="src\Teste.Validador.pas"/>
     <DCCReference Include="src\Teste.Validador.Vazio.pas"/>
     <DCCReference Include="src\Teste.Validador.Requerido.pas"/>
@@ -134,6 +138,10 @@
     <DCCReference Include="src\Teste.Validador.Estrito.CNPJ.pas"/>
     <DCCReference Include="src\Teste.Validador.Estrito.Objeto.pas"/>
     <DCCReference Include="src\Teste.Validador.Estrito.String.pas"/>
+    <DCCReference Include="src\Teste.Validador.Estrito.Inteiro.pas"/>
+    <DCCReference Include="src\Teste.Validador.Estrito.Int64.pas"/>
+    <DCCReference Include="src\Teste.Validador.Estrito.Double.pas"/>
+    <DCCReference Include="src\Teste.Validador.Estrito.Data.pas"/>
     <BuildConfiguration Include="Release">
       <Key>Cfg_2</Key>
       <CfgParent>Base</CfgParent>

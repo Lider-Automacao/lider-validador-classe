@@ -55,6 +55,10 @@ uses
   Validador.Estrito.CNPJ in '..\src\Estrito\Validador.Estrito.CNPJ.pas',
   Validador.Estrito.Objeto in '..\src\Estrito\Validador.Estrito.Objeto.pas',
   Validador.Estrito.String in '..\src\Estrito\Validador.Estrito.String.pas',
+  Validador.Estrito.Inteiro in '..\src\Estrito\Validador.Estrito.Inteiro.pas',
+  Validador.Estrito.Int64 in '..\src\Estrito\Validador.Estrito.Int64.pas',
+  Validador.Estrito.Double in '..\src\Estrito\Validador.Estrito.Double.pas',
+  Validador.Estrito.Data in '..\src\Estrito\Validador.Estrito.Data.pas',
 
   // Units de teste
   Teste.Validador in 'src\Teste.Validador.pas',
@@ -95,7 +99,11 @@ uses
   Teste.Validador.Estrito.CPF in 'src\Teste.Validador.Estrito.CPF.pas',
   Teste.Validador.Estrito.CNPJ in 'src\Teste.Validador.Estrito.CNPJ.pas',
   Teste.Validador.Estrito.Objeto in 'src\Teste.Validador.Estrito.Objeto.pas',
-  Teste.Validador.Estrito.String in 'src\Teste.Validador.Estrito.String.pas';
+  Teste.Validador.Estrito.String in 'src\Teste.Validador.Estrito.String.pas',
+  Teste.Validador.Estrito.Inteiro in 'src\Teste.Validador.Estrito.Inteiro.pas',
+  Teste.Validador.Estrito.Int64 in 'src\Teste.Validador.Estrito.Int64.pas',
+  Teste.Validador.Estrito.Double in 'src\Teste.Validador.Estrito.Double.pas',
+  Teste.Validador.Estrito.Data in 'src\Teste.Validador.Estrito.Data.pas';
 
 var
   runner: ITestRunner;
