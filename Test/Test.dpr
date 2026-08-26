@@ -52,6 +52,7 @@ uses
   Validador.Estrito.Enum in '..\src\Estrito\Validador.Estrito.Enum.pas',
   Validador.Estrito.DataString in '..\src\Estrito\Validador.Estrito.DataString.pas',
   Validador.Estrito.CPF in '..\src\Estrito\Validador.Estrito.CPF.pas',
+  Validador.Estrito.CNPJ in '..\src\Estrito\Validador.Estrito.CNPJ.pas',
 
   // Units de teste
   Teste.Validador in 'src\Teste.Validador.pas',
@@ -89,7 +90,8 @@ uses
   Teste.Validador.Estrito.Tamanho in 'src\Teste.Validador.Estrito.Tamanho.pas',
   Teste.Validador.Estrito.Enum in 'src\Teste.Validador.Estrito.Enum.pas',
   Teste.Validador.Estrito.DataString in 'src\Teste.Validador.Estrito.DataString.pas',
-  Teste.Validador.Estrito.CPF in 'src\Teste.Validador.Estrito.CPF.pas';
+  Teste.Validador.Estrito.CPF in 'src\Teste.Validador.Estrito.CPF.pas',
+  Teste.Validador.Estrito.CNPJ in 'src\Teste.Validador.Estrito.CNPJ.pas';
 
 var
   runner: ITestRunner;
