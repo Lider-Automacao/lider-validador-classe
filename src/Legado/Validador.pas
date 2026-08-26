@@ -12,7 +12,7 @@ type
   IValidadorAdd = interface;
   INullValidador = interface;
 
-  IValidador = interface
+  IValidador = interface deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
     ['{07439CC1-095B-4F4B-9B1F-6B6324E3AF78}']
     function Vazio(aMensagem : string = ''): IValidador;
     function NaoVazio(aMensagem : string = ''): IValidador;
@@ -42,20 +42,20 @@ type
     function &End: IValidadorAdd;
   end;
 
-  INullValidador = interface
+  INullValidador = interface deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
     ['{B8B91E30-BAC1-4F07-B61B-A097E3D6EBA0}']
     function Requerido(aMensagem : string = ''): IValidador;
     function Nullable: IValidador;
   end;
 
-  IValidadorAdd = interface
+  IValidadorAdd = interface deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
     ['{D643A2CE-0065-41C8-9623-7B95B5FCC4A0}']
     function Personalizada(aValidacao: IValidacaoBase): IValidadorAdd;
     function Add(aPropriedede: string; aValue: variant): INullValidador;
     function Executa: IExecutorValidador;
   end;
 
-  TValidador = class(TInterfacedObject, IValidador, IValidadorAdd, INullValidador)
+  TValidador = class deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'(TInterfacedObject, IValidador, IValidadorAdd, INullValidador)
   private
     FValidador: IExecutorValidador;
     FValue: variant;

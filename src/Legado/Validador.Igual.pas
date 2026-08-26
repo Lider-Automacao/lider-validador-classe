@@ -8,7 +8,7 @@ uses
   Validador.Base;
 
 type
-  TValidacaoIgual = class(TValidacaoBase<Variant>)
+  TValidacaoIgual = class deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'(TValidacaoBase<Variant>)
   private
     FComparador: Variant;
   public

@@ -6,7 +6,7 @@ uses
   Validador.Types, Validador, Validador.Base;
 
 type
-  TValidacaoSchemaBase<T> = class(TValidacaoBase<T>)
+  TValidacaoSchemaBase<T> = class deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'(TValidacaoBase<T>)
   protected
     FValidador: IValidadorAdd;
   public

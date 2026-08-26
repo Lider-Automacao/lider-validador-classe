@@ -7,14 +7,14 @@ uses
   Validador.Base;
 
 type
-  TValidacaoTelefone = class(TValidacaoBase<Variant>)
+  TValidacaoTelefone = class deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'(TValidacaoBase<Variant>)
   public
     constructor Create; reintroduce;
     function Valido: Boolean; override;
     class function New: IValidacao<Variant>;
   end;
 
-  TValidacaoCelular = class(TValidacaoBase<Variant>)
+  TValidacaoCelular = class deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'(TValidacaoBase<Variant>)
   public
     constructor Create; reintroduce;
     function Valido: Boolean; override;

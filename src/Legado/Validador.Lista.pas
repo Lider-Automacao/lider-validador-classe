@@ -9,7 +9,7 @@ uses
   System.Generics.Collections;
 
 type
-  TValidacaoLista<T: class, constructor> = class
+  TValidacaoLista<T: class, constructor> = class deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
     (TValidacaoBase < TObjectList < T >> )
   private
     [week]

@@ -7,7 +7,7 @@ uses
   Validador.Base;
 
 type
-  TValidacaoCEP = class(TValidacaoBase<Variant>)
+  TValidacaoCEP = class deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'(TValidacaoBase<Variant>)
   public
     constructor Create; reintroduce;
     function Valido: Boolean; override;

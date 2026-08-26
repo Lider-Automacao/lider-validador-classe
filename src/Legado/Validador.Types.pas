@@ -6,7 +6,7 @@ uses
   System.Classes, System.SysUtils;
 
 type
-  IValidacaoBase = interface
+  IValidacaoBase = interface deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
     ['{338C5DA7-E6A3-4355-8912-FEAB286C12F6}']
     function Mensagem: string; overload;
     function Propriedade: string; overload;
@@ -14,7 +14,7 @@ type
     procedure VerificaErro;
   end;
 
-  IValidacao<T> = interface(IValidacaoBase)
+  IValidacao<T> = interface deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'(IValidacaoBase)
     ['{AA0319D2-DFA9-4C53-9D47-EB3C1195AFE9}']
     function Requerido(const aRequerido: Boolean): IValidacao<T>;
     function Propriedade(const aPropriedade: string): IValidacao<T>;
@@ -22,7 +22,7 @@ type
     function Mensagem(const aMensagem: string): IValidacao<T>; overload;
   end;
 
-  IExecutorValidador = interface
+  IExecutorValidador = interface deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
     ['{1D6C10A5-E177-4561-8C3B-4197AC1AA819}']
     function Valido: Boolean;
     function Errors: String;
@@ -34,7 +34,7 @@ type
   TValidadorException = class(Exception)
   end;
 
-  TExecutorValidador = class(TInterfacedObject, IExecutorValidador)
+  TExecutorValidador = class deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'(TInterfacedObject, IExecutorValidador)
   private
     FValidacoes: TInterfaceList;
   public
