@@ -12,7 +12,7 @@ type
   TValidacaoLista<T: class, constructor> = class
     (TValidacaoBase < TObjectList < T >> )
   private
-    [week]
+    [weak]
     FValidacao: IValidacao<T>;
   public
     function Valido: Boolean; override;
