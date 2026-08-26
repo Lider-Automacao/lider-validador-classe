@@ -89,6 +89,7 @@
     <DCCReference Include="..\src\Estrito\Validador.Estrito.CEP.pas"/>
     <DCCReference Include="..\src\Estrito\Validador.Estrito.Telefone.pas"/>
     <DCCReference Include="..\src\Estrito\Validador.Estrito.Tamanho.pas"/>
+    <DCCReference Include="..\src\Estrito\Validador.Estrito.Enum.pas"/>
     <DCCReference Include="src\Teste.Validador.pas"/>
     <DCCReference Include="src\Teste.Validador.Vazio.pas"/>
     <DCCReference Include="src\Teste.Validador.Requerido.pas"/>
@@ -122,6 +123,7 @@
     <DCCReference Include="src\Teste.Validador.Estrito.CEP.pas"/>
     <DCCReference Include="src\Teste.Validador.Estrito.Telefone.pas"/>
     <DCCReference Include="src\Teste.Validador.Estrito.Tamanho.pas"/>
+    <DCCReference Include="src\Teste.Validador.Estrito.Enum.pas"/>
     <BuildConfiguration Include="Release">
       <Key>Cfg_2</Key>
       <CfgParent>Base</CfgParent>
