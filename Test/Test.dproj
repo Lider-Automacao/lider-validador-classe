@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{9A6E5C2E-6E7B-4B7A-9D3E-2C7C6E9C0A11}</ProjectGuid>
+    <MainSource>Test.dpr</MainSource>
+    <Base>True</Base>
+    <Config Condition="'$(Config)'==''">Debug</Config>
+    <Platform Condition="'$(Platform)'==''">Win32</Platform>
+    <TargetedPlatforms>1</TargetedPlatforms>
+    <AppType>Console</AppType>
+    <FrameworkType>None</FrameworkType>
+    <ProjectVersion>19.6</ProjectVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+    <Base>true</Base>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_1)'!=''">
+    <Cfg_1>true</Cfg_1>
+    <CfgParent>Base</CfgParent>
+    <Base>true</Base>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_2)'!=''">
+    <Cfg_2>true</Cfg_2>
+    <CfgParent>Base</CfgParent>
+    <Base>true</Base>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='Win32' or '$(Base_Win32)'!=''">
+    <Base_Win32>true</Base_Win32>
+    <CfgParent>Base</CfgParent>
+    <Base>true</Base>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Base)'!=''">
+    <DCC_UnitSearchPath>..\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+    <DCC_Namespace>System.Win;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
+    <DCC_DcuOutput>.\dcu\$(Platform)\$(Config)</DCC_DcuOutput>
+    <DCC_ExeOutput>.\bin\$(Platform)\$(Config)</DCC_ExeOutput>
+    <VerInfo_Locale>1046</VerInfo_Locale>
+    <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+    <DCC_UsePackage>DUnitX;$(DCC_UsePackage)</DCC_UsePackage>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_1)'!=''">
+    <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+    <DCC_DebugDCUs>true</DCC_DebugDCUs>
+    <DCC_Optimize>false</DCC_Optimize>
+    <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
+    <DCC_DebugInformation>true</DCC_DebugInformation>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Cfg_2)'!=''">
+    <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+    <DCC_Define>RELEASE;CI;$(DCC_Define)</DCC_Define>
+    <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+    <DCC_DebugInformation>0</DCC_DebugInformation>
+  </PropertyGroup>
+  <ItemGroup>
+    <DelphiCompile Include="Test.dpr">
+      <MainSource>MainSource</MainSource>
+    </DelphiCompile>
+    <DCCReference Include="..\src\Legado\Validador.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.Types.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.Base.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.Base.Schema.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.Commons.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.CNPJ.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.CPF.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.Enum.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.Igual.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.Lista.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.MaiorQue.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.MenorQue.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.QueryParams.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.Regex.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.Requerido.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.Vazio.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.Email.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.Url.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.Telefone.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.CEP.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.Tamanho.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.Entre.pas"/>
+    <DCCReference Include="..\src\Legado\Validador.DataString.pas"/>
+    <DCCReference Include="src\Teste.Validador.pas"/>
+    <DCCReference Include="src\Teste.Validador.Vazio.pas"/>
+    <DCCReference Include="src\Teste.Validador.Requerido.pas"/>
+    <DCCReference Include="src\Teste.Validador.Igual.pas"/>
+    <DCCReference Include="src\Teste.Validador.Regex.pas"/>
+    <DCCReference Include="src\Teste.Validador.Enum.pas"/>
+    <DCCReference Include="src\Teste.Validador.MaiorQue.pas"/>
+    <DCCReference Include="src\Teste.Validador.MenorQue.pas"/>
+    <DCCReference Include="src\Teste.Validador.CPF.pas"/>
+    <DCCReference Include="src\Teste.Validador.CNPJ.pas"/>
+    <DCCReference Include="src\Teste.Validador.Types.pas"/>
+    <DCCReference Include="src\Teste.Validador.Commons.pas"/>
+    <DCCReference Include="src\Teste.Validador.QueryParams.pas"/>
+    <DCCReference Include="src\Teste.Validador.Base.Schema.pas"/>
+    <DCCReference Include="src\Teste.Validador.Lista.pas"/>
+    <DCCReference Include="src\Teste.Validador.Email.pas"/>
+    <DCCReference Include="src\Teste.Validador.Url.pas"/>
+    <DCCReference Include="src\Teste.Validador.Telefone.pas"/>
+    <DCCReference Include="src\Teste.Validador.CEP.pas"/>
+    <DCCReference Include="src\Teste.Validador.Tamanho.pas"/>
+    <DCCReference Include="src\Teste.Validador.Entre.pas"/>
+    <DCCReference Include="src\Teste.Validador.DataString.pas"/>
+    <BuildConfiguration Include="Release">
+      <Key>Cfg_2</Key>
+      <CfgParent>Base</CfgParent>
+    </BuildConfiguration>
+    <BuildConfiguration Include="Base">
+      <Key>Base</Key>
+    </BuildConfiguration>
+    <BuildConfiguration Include="Debug">
+      <Key>Cfg_1</Key>
+      <CfgParent>Base</CfgParent>
+    </BuildConfiguration>
+  </ItemGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Delphi.Personality.12</Borland.Personality>
+    <Borland.ProjectType>Application</Borland.ProjectType>
+  </ProjectExtensions>
+  <Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
+  <Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
+</Project>
