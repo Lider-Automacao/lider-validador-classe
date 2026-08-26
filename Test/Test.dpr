@@ -50,6 +50,7 @@ uses
   Validador.Estrito.Telefone in '..\src\Estrito\Validador.Estrito.Telefone.pas',
   Validador.Estrito.Tamanho in '..\src\Estrito\Validador.Estrito.Tamanho.pas',
   Validador.Estrito.Enum in '..\src\Estrito\Validador.Estrito.Enum.pas',
+  Validador.Estrito.DataString in '..\src\Estrito\Validador.Estrito.DataString.pas',
 
   // Units de teste
   Teste.Validador in 'src\Teste.Validador.pas',
@@ -85,7 +86,8 @@ uses
   Teste.Validador.Estrito.CEP in 'src\Teste.Validador.Estrito.CEP.pas',
   Teste.Validador.Estrito.Telefone in 'src\Teste.Validador.Estrito.Telefone.pas',
   Teste.Validador.Estrito.Tamanho in 'src\Teste.Validador.Estrito.Tamanho.pas',
-  Teste.Validador.Estrito.Enum in 'src\Teste.Validador.Estrito.Enum.pas';
+  Teste.Validador.Estrito.Enum in 'src\Teste.Validador.Estrito.Enum.pas',
+  Teste.Validador.Estrito.DataString in 'src\Teste.Validador.Estrito.DataString.pas';
 
 var
   runner: ITestRunner;
