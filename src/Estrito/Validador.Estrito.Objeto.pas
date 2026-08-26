@@ -20,11 +20,9 @@ type
   TValidacaoEstritaLista<T: class> = class(TValidacaoEstritaBase<TArray<T>>)
   private
     FValidacaoItem: IValidacaoEstrita<T>;
-    FMensagemFalhas: string;
   public
     constructor Create(const aValidacaoItem: IValidacaoEstrita<T>); reintroduce;
     function Valido: Boolean; override;
-    function Mensagem: string; reintroduce; overload;
     class function New(const aValidacaoItem: IValidacaoEstrita<T>): IValidacaoEstrita<TArray<T>>;
   end;
 
@@ -68,7 +66,7 @@ var
   I: Integer;
   LFalhas: TArray<string>;
 begin
-  FMensagemFalhas := '';
+  FMensagem := '';
 
   if not FValue.HasValue then
     Exit(not FRequerido);
@@ -85,14 +83,7 @@ begin
   Result := Length(LFalhas) = 0;
 
   if not Result then
-    FMensagemFalhas := String.Join('; ', LFalhas);
-end;
-
-function TValidacaoEstritaLista<T>.Mensagem: string;
-begin
-  if FMensagemFalhas <> '' then
-    Exit(FMensagemFalhas);
-  Result := inherited Mensagem;
+    FMensagem := String.Join('; ', LFalhas);
 end;
 
 end.
