@@ -84,6 +84,9 @@
     <DCCReference Include="..\src\Estrito\Validador.Estrito.Comparacao.pas"/>
     <DCCReference Include="..\src\Estrito\Validador.Estrito.Vazio.pas"/>
     <DCCReference Include="..\src\Estrito\Validador.Estrito.Regex.pas"/>
+    <DCCReference Include="..\src\Estrito\Validador.Estrito.Email.pas"/>
+    <DCCReference Include="..\src\Estrito\Validador.Estrito.Url.pas"/>
+    <DCCReference Include="..\src\Estrito\Validador.Estrito.CEP.pas"/>
     <DCCReference Include="src\Teste.Validador.pas"/>
     <DCCReference Include="src\Teste.Validador.Vazio.pas"/>
     <DCCReference Include="src\Teste.Validador.Requerido.pas"/>
@@ -112,6 +115,9 @@
     <DCCReference Include="src\Teste.Validador.Estrito.Comparacao.pas"/>
     <DCCReference Include="src\Teste.Validador.Estrito.Vazio.pas"/>
     <DCCReference Include="src\Teste.Validador.Estrito.Regex.pas"/>
+    <DCCReference Include="src\Teste.Validador.Estrito.Email.pas"/>
+    <DCCReference Include="src\Teste.Validador.Estrito.Url.pas"/>
+    <DCCReference Include="src\Teste.Validador.Estrito.CEP.pas"/>
     <BuildConfiguration Include="Release">
       <Key>Cfg_2</Key>
       <CfgParent>Base</CfgParent>

@@ -44,6 +44,9 @@ uses
   Validador.Estrito.Comparacao in '..\src\Estrito\Validador.Estrito.Comparacao.pas',
   Validador.Estrito.Vazio in '..\src\Estrito\Validador.Estrito.Vazio.pas',
   Validador.Estrito.Regex in '..\src\Estrito\Validador.Estrito.Regex.pas',
+  Validador.Estrito.Email in '..\src\Estrito\Validador.Estrito.Email.pas',
+  Validador.Estrito.Url in '..\src\Estrito\Validador.Estrito.Url.pas',
+  Validador.Estrito.CEP in '..\src\Estrito\Validador.Estrito.CEP.pas',
 
   // Units de teste
   Teste.Validador in 'src\Teste.Validador.pas',
@@ -73,7 +76,10 @@ uses
   Teste.Validador.Estrito.Requerido in 'src\Teste.Validador.Estrito.Requerido.pas',
   Teste.Validador.Estrito.Comparacao in 'src\Teste.Validador.Estrito.Comparacao.pas',
   Teste.Validador.Estrito.Vazio in 'src\Teste.Validador.Estrito.Vazio.pas',
-  Teste.Validador.Estrito.Regex in 'src\Teste.Validador.Estrito.Regex.pas';
+  Teste.Validador.Estrito.Regex in 'src\Teste.Validador.Estrito.Regex.pas',
+  Teste.Validador.Estrito.Email in 'src\Teste.Validador.Estrito.Email.pas',
+  Teste.Validador.Estrito.Url in 'src\Teste.Validador.Estrito.Url.pas',
+  Teste.Validador.Estrito.CEP in 'src\Teste.Validador.Estrito.CEP.pas';
 
 var
   runner: ITestRunner;
