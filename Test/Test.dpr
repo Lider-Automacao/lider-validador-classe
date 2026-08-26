@@ -42,6 +42,7 @@ uses
   Validador.Estrito.Base in '..\src\Estrito\Validador.Estrito.Base.pas',
   Validador.Estrito.Requerido in '..\src\Estrito\Validador.Estrito.Requerido.pas',
   Validador.Estrito.Comparacao in '..\src\Estrito\Validador.Estrito.Comparacao.pas',
+  Validador.Estrito.Vazio in '..\src\Estrito\Validador.Estrito.Vazio.pas',
 
   // Units de teste
   Teste.Validador in 'src\Teste.Validador.pas',
@@ -69,7 +70,8 @@ uses
   Teste.Validador.Estrito.Types in 'src\Teste.Validador.Estrito.Types.pas',
   Teste.Validador.Estrito.Base in 'src\Teste.Validador.Estrito.Base.pas',
   Teste.Validador.Estrito.Requerido in 'src\Teste.Validador.Estrito.Requerido.pas',
-  Teste.Validador.Estrito.Comparacao in 'src\Teste.Validador.Estrito.Comparacao.pas';
+  Teste.Validador.Estrito.Comparacao in 'src\Teste.Validador.Estrito.Comparacao.pas',
+  Teste.Validador.Estrito.Vazio in 'src\Teste.Validador.Estrito.Vazio.pas';
 
 var
   runner: ITestRunner;
