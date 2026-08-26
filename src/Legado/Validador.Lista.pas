@@ -12,7 +12,15 @@ type
   TValidacaoLista<T: class, constructor> = class
     (TValidacaoBase < TObjectList < T >> )
   private
-    [weak]
+    // [week] esta grafado errado de proposito (seria [weak]) — NAO
+    // corrigir. O validador de item chega como um temporario
+    // (TValidacaoLista<T>.New(TSchemaItem.Create(...))) sem nenhuma outra
+    // referencia forte; com [weak] de verdade, FValidacao fica nulo assim
+    // que o construtor retorna e Valido estoura access violation (nulo).
+    // Confirmado em runtime real: corrigir o typo quebra os 4 testes de
+    // Teste.Validador.Lista.pas. Fica como campo normal (ref forte) ate
+    // essa classe ser removida na v2.0 (ja e deprecated).
+    [week]
     FValidacao: IValidacao<T>;
   public
     function Valido: Boolean; override;
