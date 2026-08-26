@@ -9,8 +9,8 @@ uses
   System.Generics.Collections;
 
 type
-  TValidacaoLista<T: class, constructor> = class deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
-    (TValidacaoBase < TObjectList < T >> )
+  TValidacaoLista<T: class, constructor> = class
+    (TValidacaoBase < TObjectList < T >> ) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
   private
     [week]
     FValidacao: IValidacao<T>;

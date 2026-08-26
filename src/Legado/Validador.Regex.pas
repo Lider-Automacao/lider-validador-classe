@@ -8,7 +8,7 @@ uses
   Validador.Base;
 
 type
-  TValidacaoRegex = class deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'(TValidacaoBase<Variant>)
+  TValidacaoRegex = class(TValidacaoBase<Variant>) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
   private
     FRegex: String;
   public

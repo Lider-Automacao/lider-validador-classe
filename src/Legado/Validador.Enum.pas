@@ -9,7 +9,7 @@ uses
 
 type
   TEnumValues = Array of string;
-  TValidacaoEnum = class deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'(TValidacaoBase<Variant>)
+  TValidacaoEnum = class(TValidacaoBase<Variant>) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
   private
     FEnumValues: TEnumValues;
   public

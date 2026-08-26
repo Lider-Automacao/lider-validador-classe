@@ -8,7 +8,7 @@ uses
   Validador.Base;
 
 type
-  TValidacaoRequerido = class deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'(TValidacaoBase<Variant>)
+  TValidacaoRequerido = class(TValidacaoBase<Variant>) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
   public
     constructor Create; reintroduce;
     function Valido: Boolean; override;

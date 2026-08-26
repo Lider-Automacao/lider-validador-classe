@@ -7,7 +7,7 @@ uses
   Validador.Base;
 
 type
-  TValidacaoCNPJ = class deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'(TValidacaoBase<Variant>)
+  TValidacaoCNPJ = class(TValidacaoBase<Variant>) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
   private
     function TodosCaracteresIguais(const ACNPJ: string): Boolean;
     function ValidaDigitos(const ACNPJ: string): Boolean;

@@ -6,7 +6,7 @@ uses
   Validador.Types;
 
 type
-  TValidacaoBase<T> = class deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'(TInterfacedObject, IValidacao<T>)
+  TValidacaoBase<T> = class(TInterfacedObject, IValidacao<T>) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
   protected
     FRequerido: Boolean;
     FMensagem: string;

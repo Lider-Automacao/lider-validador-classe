@@ -8,7 +8,7 @@ uses
   Validador.Base;
 
 type
-  TValidacaoMenorQue = class deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'(TValidacaoBase<variant>)
+  TValidacaoMenorQue = class(TValidacaoBase<variant>) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
   private
     FComparador: variant;
   public
@@ -17,7 +17,7 @@ type
     class function New(aComparador: variant): IValidacao<variant>;
   end;
 
-  TValidacaoMenorOuIgualQue = class deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'(TValidacaoBase<variant>)
+  TValidacaoMenorOuIgualQue = class(TValidacaoBase<variant>) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
   private
     FComparador: variant;
   public
