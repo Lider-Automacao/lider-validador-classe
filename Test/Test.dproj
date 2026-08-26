@@ -83,6 +83,7 @@
     <DCCReference Include="..\src\Estrito\Validador.Estrito.Requerido.pas"/>
     <DCCReference Include="..\src\Estrito\Validador.Estrito.Comparacao.pas"/>
     <DCCReference Include="..\src\Estrito\Validador.Estrito.Vazio.pas"/>
+    <DCCReference Include="..\src\Estrito\Validador.Estrito.Regex.pas"/>
     <DCCReference Include="src\Teste.Validador.pas"/>
     <DCCReference Include="src\Teste.Validador.Vazio.pas"/>
     <DCCReference Include="src\Teste.Validador.Requerido.pas"/>
@@ -110,6 +111,7 @@
     <DCCReference Include="src\Teste.Validador.Estrito.Requerido.pas"/>
     <DCCReference Include="src\Teste.Validador.Estrito.Comparacao.pas"/>
     <DCCReference Include="src\Teste.Validador.Estrito.Vazio.pas"/>
+    <DCCReference Include="src\Teste.Validador.Estrito.Regex.pas"/>
     <BuildConfiguration Include="Release">
       <Key>Cfg_2</Key>
       <CfgParent>Base</CfgParent>
