@@ -47,6 +47,7 @@ uses
   Validador.Estrito.Email in '..\src\Estrito\Validador.Estrito.Email.pas',
   Validador.Estrito.Url in '..\src\Estrito\Validador.Estrito.Url.pas',
   Validador.Estrito.CEP in '..\src\Estrito\Validador.Estrito.CEP.pas',
+  Validador.Estrito.Telefone in '..\src\Estrito\Validador.Estrito.Telefone.pas',
 
   // Units de teste
   Teste.Validador in 'src\Teste.Validador.pas',
@@ -79,7 +80,8 @@ uses
   Teste.Validador.Estrito.Regex in 'src\Teste.Validador.Estrito.Regex.pas',
   Teste.Validador.Estrito.Email in 'src\Teste.Validador.Estrito.Email.pas',
   Teste.Validador.Estrito.Url in 'src\Teste.Validador.Estrito.Url.pas',
-  Teste.Validador.Estrito.CEP in 'src\Teste.Validador.Estrito.CEP.pas';
+  Teste.Validador.Estrito.CEP in 'src\Teste.Validador.Estrito.CEP.pas',
+  Teste.Validador.Estrito.Telefone in 'src\Teste.Validador.Estrito.Telefone.pas';
 
 var
   runner: ITestRunner;
