@@ -1,11 +1,11 @@
-﻿unit Teste.Validador.Estrito.String;
+﻿unit Teste.Validador.Estrito.Strings;
 
 interface
 
 uses
   DUnitX.TestFramework,
   Validador.Estrito.Types,
-  Validador.Estrito.String;
+  Validador.Estrito.Strings;
 
 type
   [TestFixture]

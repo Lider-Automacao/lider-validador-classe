@@ -1,4 +1,4 @@
-﻿unit Validador.Estrito.String;
+﻿unit Validador.Estrito.Strings;
 
 interface
 

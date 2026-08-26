@@ -53,7 +53,7 @@ projeto).
 
   ```pascal
   uses
-    Validador.Estrito.String;
+    Validador.Estrito.Strings;
 
   if not TValidadorString.New.Requerido.CPF.Valida(pDto.CPF).Valido then
     raise Exception.Create('CPF inválido');

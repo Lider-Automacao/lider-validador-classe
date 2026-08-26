@@ -6,30 +6,30 @@ uses
   System.Classes, System.SysUtils;
 
 type
-  IValidacaoBase = interface deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
+  IValidacaoBase = interface
     ['{338C5DA7-E6A3-4355-8912-FEAB286C12F6}']
     function Mensagem: string; overload;
     function Propriedade: string; overload;
     function Valido: Boolean;
     procedure VerificaErro;
-  end;
+  end deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0';
 
-  IValidacao<T> = interface(IValidacaoBase) deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
+  IValidacao<T> = interface(IValidacaoBase)
     ['{AA0319D2-DFA9-4C53-9D47-EB3C1195AFE9}']
     function Requerido(const aRequerido: Boolean): IValidacao<T>;
     function Propriedade(const aPropriedade: string): IValidacao<T>;
     function Valida(const aValue: T): IValidacao<T>;
     function Mensagem(const aMensagem: string): IValidacao<T>; overload;
-  end;
+  end deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0';
 
-  IExecutorValidador = interface deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0'
+  IExecutorValidador = interface
     ['{1D6C10A5-E177-4561-8C3B-4197AC1AA819}']
     function Valido: Boolean;
     function Errors: String;
     procedure VerificaErro;
     procedure VerificaTodosErro;
     function Add(aComando: IValidacaoBase): IExecutorValidador;
-  end;
+  end deprecated 'Use Validador.Estrito.* — remocao planejada pra v2.0';
 
   TValidadorException = class(Exception)
   end;
