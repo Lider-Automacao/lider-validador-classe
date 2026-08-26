@@ -1,4 +1,4 @@
-unit Validador.Vazio;
+﻿unit Validador.Vazio;
 
 interface
 
@@ -7,18 +7,18 @@ uses
   Validador.Base;
 
 type
-  TValidacaoEstaVazio = class(TValidacaoBase<String>)
+  TValidacaoEstaVazio = class(TValidacaoBase<Variant>)
   public
     constructor Create; reintroduce;
     function Valido: Boolean; override;
-    class function New: IValidacao<String>;
+    class function New: IValidacao<Variant>;
   end;
 
-  TValidacaoNaoEstaVazio = class(TValidacaoBase<String>)
+  TValidacaoNaoEstaVazio = class(TValidacaoBase<Variant>)
   public
     constructor Create; reintroduce;
     function Valido: Boolean; override;
-    class function New: IValidacao<String>;
+    class function New: IValidacao<Variant>;
   end;
 
 implementation
@@ -31,37 +31,37 @@ begin
   inherited Create('Deve ser Vazio');
 end;
 
-class function TValidacaoEstaVazio.New: IValidacao<String>;
+class function TValidacaoEstaVazio.New: IValidacao<Variant>;
 begin
   Result := Self.Create;
 end;
 
 function TValidacaoEstaVazio.Valido: Boolean;
 begin
- if VarIsNull(FValue) and not FRequerido then
-    Exit(True);
+  if VarIsNull(FValue) then
+    Exit(not FRequerido);
 
-  Result := Trim(FValue).IsEmpty;
+  Result := VarToStr(FValue).Trim.IsEmpty;
 end;
 
 { TValidacaoNaoEstaVazio }
 
 constructor TValidacaoNaoEstaVazio.Create;
 begin
-  inherited Create('N�o deve ser Vazio');
+  inherited Create('Não deve ser Vazio');
 end;
 
-class function TValidacaoNaoEstaVazio.New: IValidacao<String>;
+class function TValidacaoNaoEstaVazio.New: IValidacao<Variant>;
 begin
   Result := Self.Create;
 end;
 
 function TValidacaoNaoEstaVazio.Valido: Boolean;
 begin
- if VarIsNull(FValue) and not FRequerido then
-    Exit(True);
+  if VarIsNull(FValue) then
+    Exit(not FRequerido);
 
-  Result := not Trim(FValue).IsEmpty;
+  Result := not VarToStr(FValue).Trim.IsEmpty;
 end;
 
 end.

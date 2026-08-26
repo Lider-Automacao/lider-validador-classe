@@ -1,4 +1,4 @@
-unit Validador.MenorQue;
+﻿unit Validador.MenorQue;
 
 interface
 
@@ -46,8 +46,8 @@ end;
 
 function TValidacaoMenorOuIgualQue.Valido: Boolean;
 begin
- if VarIsNull(FValue) and not FRequerido then
-    Exit(True);
+  if VarIsNull(FValue) then
+    Exit(not FRequerido);
 
   if VarIsEmpty(FValue) then
     Exit(False);
@@ -73,8 +73,8 @@ end;
 
 function TValidacaoMenorQue.Valido: Boolean;
 begin
- if VarIsNull(FValue) and not FRequerido then
-    Exit(True);
+  if VarIsNull(FValue) then
+    Exit(not FRequerido);
 
   if VarIsEmpty(FValue) then
     Exit(False);

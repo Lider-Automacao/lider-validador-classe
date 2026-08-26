@@ -1,4 +1,4 @@
-unit Validador.Lista;
+﻿unit Validador.Lista;
 
 interface
 
@@ -26,9 +26,8 @@ implementation
 uses
   System.SysUtils,
   Variants,
-  System.JSON.Writers,
-  System.JSON.Types,
-  System.Classes, 
+  System.JSON,
+  System.Classes,
   System.StrUtils;
 
 constructor TValidacaoLista<T>.Create(const aValidacao: IValidacao<T>);
@@ -47,18 +46,17 @@ function TValidacaoLista<T>.Valido: Boolean;
 var
   vItem: T;
   vIndex: Integer;
-  vStringWriter: TStringWriter;
-  vJsonTextWriter: TJsonTextWriter;
+  vErros: TJSONArray;
+  vErro: TJSONObject;
+  vErroAninhado: TJSONValue;
   vErrorCount: Integer;
 begin
   vErrorCount := 0;
   FMensagem := '';
   Result := True;
 
-  vStringWriter := TStringWriter.Create;
-  vJsonTextWriter := TJsonTextWriter.Create(vStringWriter);
+  vErros := TJSONArray.Create;
   try
-    vJsonTextWriter.WriteStartArray;
     for vIndex := 0 to Pred(FValue.Count) do
     begin
       vItem := FValue[vIndex];
@@ -71,29 +69,32 @@ begin
         if Trim(FValidacao.Mensagem).IsEmpty then
           Continue;
 
-        vJsonTextWriter.WriteStartObject;
-        vJsonTextWriter.WritePropertyName('index');
-        vJsonTextWriter.WriteValue(vIndex);
-        vJsonTextWriter.WritePropertyName('error');
+        vErro := TJSONObject.Create;
+        vErro.AddPair('index', TJSONNumber.Create(vIndex));
+
         if FValidacao.Mensagem.StartsWith('{') or
           FValidacao.Mensagem.StartsWith('[') then
-          vJsonTextWriter.WriteRaw(FValidacao.Mensagem)
+        begin
+          vErroAninhado := TJSONObject.ParseJSONValue(FValidacao.Mensagem);
+          if Assigned(vErroAninhado) then
+            vErro.AddPair('error', vErroAninhado)
+          else
+            vErro.AddPair('error', FValidacao.Mensagem);
+        end
         else
-          vJsonTextWriter.WriteValue(FValidacao.Mensagem);
-        vJsonTextWriter.WriteEndObject;
+          vErro.AddPair('error', FValidacao.Mensagem);
+
+        vErros.Add(vErro);
       end;
     end;
-
-    vJsonTextWriter.WriteEndArray;
 
     Result := vErrorCount = 0;
 
     if not Result then
-      FMensagem := Trim(vStringWriter.ToString).Replace('null','');
+      FMensagem := vErros.ToJSON;
 
   finally
-    FreeAndNil(vJsonTextWriter);
-    FreeAndNil(vStringWriter);
+    vErros.Free;
   end;
 end;
 

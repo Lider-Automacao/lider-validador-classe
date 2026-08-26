@@ -1,4 +1,4 @@
-unit Validador.Base;
+Ôªøunit Validador.Base;
 
 interface
 
@@ -33,11 +33,11 @@ uses
 constructor TValidacaoBase<T>.Create(const aMensagem: string);
 begin
   FRequerido := False;
-  FMensagem := 'Campo Inv·lido';
+  FMensagem := 'Campo Inv√°lido';
   FPropriedade := 'Campo';
 
   if Trim(aMensagem).Length = 0 then
-    raise Exception.Create('Mensagem È requerida');
+    raise Exception.Create('Mensagem √© requerida');
 
   FMensagem := aMensagem;
 end;

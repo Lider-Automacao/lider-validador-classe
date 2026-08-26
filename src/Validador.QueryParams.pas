@@ -1,4 +1,4 @@
-unit Validador.QueryParams;
+ï»¿unit Validador.QueryParams;
 
 interface
 
@@ -14,79 +14,73 @@ function ValidaLimit(const pQuery: TDictionary<string, string>): Boolean;
 
 implementation
 
-uses Validador.Commons, System.Types;
+uses
+  Validador,
+  Validador.Types,
+  Validador.Commons,
+  System.Types;
+
+function ValidaCampoInteiroPositivo(const pQuery: TDictionary<string, string>; const pCampo: string): Boolean;
+var
+  LValor: Integer;
+  LExecutor: IExecutorValidador;
+begin
+  Result := False;
+
+  if not pQuery.ContainsKey(pCampo) then
+    Exit;
+
+  try
+    LValor := pQuery[pCampo].ToInteger;
+  except
+    on E: Exception do
+      raise EValidationException.Create(Format('Erro ao converter %s para inteiro: %s', [pCampo, E.Message]));
+  end;
+
+  LExecutor := TValidador.New
+    .Add(pCampo, LValor)
+      .Nullable
+      .MaiorQueOuIgual(1)
+    .&End
+    .Executa;
+
+  if not LExecutor.Valido then
+    raise EValidationException.Create(Format('O valor de %s deve ser maior que 0', [pCampo]));
+
+  Result := True;
+end;
 
 function ValidaCodigoExterno(const pQuery: TDictionary<string, string>): Boolean;
 var
-  CodigoExterno: TIntegerDynArray;
+  LCodigoExterno: TIntegerDynArray;
   I: Integer;
 begin
   Result := False;
 
-  if pQuery.ContainsKey('codigoExterno') then
-  begin
-    try
-      try
-      // Tenta converter a string para um array de inteiros
-        CodigoExterno := InStringToArray(pQuery['codigoExterno']);
-      except
-       raise EValidationException.Create('Todos os valores devem ser Inteiros');
-      end;
+  if not pQuery.ContainsKey('codigoExterno') then
+    Exit;
 
-      // Verifica se todos os valores são maiores ou iguais a 1
-      for I := 0 to High(CodigoExterno) do
-      begin
-        if CodigoExterno[I] < 1 then
-          raise EValidationException.Create('Todos os valores devem ser maiores ou iguais a 1');
-      end;
-
-      // ResultArray := CodigoExterno;
-      Result := True;
-    except
-      on E: Exception do
-        raise EValidationException.Create('codigoExterno: ' + E.Message);
-    end;
+  try
+    LCodigoExterno := InStringToArray(pQuery['codigoExterno']);
+  except
+    raise EValidationException.Create('codigoExterno: Todos os valores devem ser Inteiros');
   end;
+
+  for I := 0 to High(LCodigoExterno) do
+    if LCodigoExterno[I] < 1 then
+      raise EValidationException.Create('codigoExterno: Todos os valores devem ser maiores ou iguais a 1');
+
+  Result := True;
 end;
 
 function ValidaPage(const pQuery: TDictionary<string, string>): Boolean;
-var
-  PageValue: Integer;
 begin
-  Result := False;
-  if pQuery.ContainsKey('page') then
-  begin
-    try
-      PageValue := pQuery['page'].ToInteger;
-
-      if PageValue <= 0 then
-        raise EValidationException.Create('O valor de page deve ser maior que 0');
-
-      Result := True;
-    except
-      on E: Exception do
-        raise EValidationException.Create('Erro ao converter page para inteiro: ' + E.Message);
-    end;
-  end;
+  Result := ValidaCampoInteiroPositivo(pQuery, 'page');
 end;
 
 function ValidaLimit(const pQuery: TDictionary<string, string>): Boolean;
-var
-  LimitValue: Integer;
 begin
-  Result := False;
-  if pQuery.ContainsKey('limit') then
-  begin
-    try
-      LimitValue := pQuery['limit'].ToInteger;
-      if LimitValue <= 0 then
-        raise EValidationException.Create('O valor de limit deve ser maior que 0');
-      Result := True;
-    except
-      on E: Exception do
-        raise EValidationException.Create('Erro ao converter limit para inteiro: ' + E.Message);
-    end;
-  end;
+  Result := ValidaCampoInteiroPositivo(pQuery, 'limit');
 end;
 
 end.

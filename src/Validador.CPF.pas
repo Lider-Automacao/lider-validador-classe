@@ -1,4 +1,4 @@
-unit Validador.CPF;
+﻿unit Validador.CPF;
 
 interface
 
@@ -7,13 +7,13 @@ uses
   Validador.Base;
 
 type
-  TValidacaoCPF = class(TValidacaoBase<String>)
+  TValidacaoCPF = class(TValidacaoBase<Variant>)
   private
     function ValidaDigitos(const ACPF: string): Boolean;
   public
     constructor Create; reintroduce;
     function Valido: Boolean; override;
-  class  function New: IValidacao<String>;
+  class  function New: IValidacao<Variant>;
   end;
 
 implementation
@@ -93,16 +93,19 @@ end;
 
 constructor TValidacaoCPF.Create;
 begin
- inherited Create('CPF inv�lido');
+ inherited Create('CPF inválido');
 end;
 
-class function TValidacaoCPF.New: IValidacao<String>;
+class function TValidacaoCPF.New: IValidacao<Variant>;
 begin
   Result := Self.Create;
 end;
 
 function TValidacaoCPF.Valido: Boolean;
 begin
-  Result := TRegEx.IsMatch(FValue, '^(\d{3}\.\d{3}\.\d{3}\-\d{2}|\d{11})$') and ValidaDigitos(FValue);
+  if VarIsNull(FValue) then
+    Exit(not FRequerido);
+
+  Result := TRegEx.IsMatch(VarToStr(FValue), '^(\d{3}\.\d{3}\.\d{3}\-\d{2}|\d{11})$') and ValidaDigitos(VarToStr(FValue));
 end;
 end.

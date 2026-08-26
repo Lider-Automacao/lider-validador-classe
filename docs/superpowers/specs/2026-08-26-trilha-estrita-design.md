@@ -1,4 +1,4 @@
-# Trilha de validação tipada (`Validador.Tipado.*`) — design
+# trilha de validação estrita (`Validador.Estrito.*`) — design
 
 **Status:** aprovado em conversa, aguardando revisão final antes do plano de implementação.
 **Data:** 2026-08-26
@@ -28,14 +28,14 @@ agora.
 - Zero uso de `Variant` na trilha nova — `Null`/ausência de valor
   representado por um `TNullable<T>` genérico próprio.
 - Não quebrar nenhum consumidor existente da trilha atual.
-- Organizar o código-fonte em pastas (`Legado/` e `Tipado/`) sem renomear
+- Organizar o código-fonte em pastas (`Legado/` e `Estrito/`) sem renomear
   nenhuma unit existente.
 
 ## Não-objetivos (fora de escopo deste spec)
 
 - Não redesenha o `TValidador`/`IValidadorAdd`/`INullValidador`
   multi-campo (`Add(prop, valor).Requerido.NaoVazio.End`) pra ser
-  genérico por campo. A trilha tipada valida **um valor por vez**, não
+  genérico por campo. A trilha estrita valida **um valor por vez**, não
   agrega múltiplos campos heterogêneos num único JSON de erros como o
   `TValidador` atual faz.
 - Não remove nem reescreve nenhuma classe da trilha atual nesta rodada —
@@ -43,12 +43,12 @@ agora.
 - Não adiciona dependência externa (Spring4D ou outra) — `TNullable<T>`
   é implementado localmente.
 - Não migra `Validador.Lista.pas`/`Validador.Base.Schema.pas`
-  (composição de objeto/lista) pra trilha tipada — ficam só na trilha
+  (composição de objeto/lista) pra trilha estrita — ficam só na trilha
   legada por ora.
 
 ## Arquitetura
 
-### `TNullable<T>` (novo, `Validador.Tipado.Types.pas`)
+### `TNullable<T>` (novo, `Validador.Estrito.Types.pas`)
 
 Record genérico local, sem dependência externa:
 
@@ -72,35 +72,35 @@ sem precisar escrever `.Valida(TNullable<string>.Create('algumaString'))`
 no caso comum (valor presente). Ausência de valor é explícita:
 `.Valida(TNullable<string>.Empty)`.
 
-### `IValidacaoTipada<T>` / `TValidacaoTipadaBase<T>` (`Validador.Tipado.Base.pas`)
+### `IValidacaoEstrita<T>` / `TValidacaoEstritaBase<T>` (`Validador.Estrito.Base.pas`)
 
 Espelham `IValidacao<T>` / `TValidacaoBase<T>` de hoje, trocando
 `FValue: T` (ou `Variant`) por `FValue: TNullable<T>`, e
 `VarIsNull(FValue)` por `not FValue.HasValue`.
 
 ```pascal
-IValidacaoTipadaBase = interface
+IValidacaoEstritaBase = interface
   function Mensagem: string; overload;
   function Propriedade: string; overload;
   function Valido: Boolean;
   procedure VerificaErro;
 end;
 
-IValidacaoTipada<T> = interface(IValidacaoTipadaBase)
-  function Requerido(const aRequerido: Boolean): IValidacaoTipada<T>;
-  function Propriedade(const aPropriedade: string): IValidacaoTipada<T>;
-  function Valida(const aValue: TNullable<T>): IValidacaoTipada<T>;
-  function Mensagem(const aMensagem: string): IValidacaoTipada<T>; overload;
+IValidacaoEstrita<T> = interface(IValidacaoEstritaBase)
+  function Requerido(const aRequerido: Boolean): IValidacaoEstrita<T>;
+  function Propriedade(const aPropriedade: string): IValidacaoEstrita<T>;
+  function Valida(const aValue: TNullable<T>): IValidacaoEstrita<T>;
+  function Mensagem(const aMensagem: string): IValidacaoEstrita<T>; overload;
 end;
 ```
 
-### Validadores genéricos reais (`Validador.Tipado.Comparacao.pas`, `Validador.Tipado.Requerido.pas`)
+### Validadores genéricos reais (`Validador.Estrito.Comparacao.pas`, `Validador.Estrito.Requerido.pas`)
 
 `T` livre, comparação via `TComparer<T>.Default.Compare` (do
 `System.Generics.Defaults`, já na RTL, sem dependência nova):
 
-- `TValidacaoTipadaRequerido<T>` — `Valido := FValue.HasValue`.
-- `TValidacaoTipadaMaiorQue<T>`, `MenorQue<T>`, `MaiorOuIgualQue<T>`,
+- `TValidacaoEstritaRequerido<T>` — `Valido := FValue.HasValue`.
+- `TValidacaoEstritaMaiorQue<T>`, `MenorQue<T>`, `MaiorOuIgualQue<T>`,
   `MenorOuIgualQue<T>`, `Entre<T>`, `Igual<T>`.
 
 Nota de risco: `TComparer<T>.Default` funciona bem pra tipos ordinais,
@@ -118,7 +118,7 @@ existente na trilha legada (incluindo o fix de CNPJ alfanumérico e
 `VarToStr(FValue)`/`VarIsNull(FValue)` pra `FValue.Value`/`not
 FValue.HasValue`.
 
-### Fachadas fluentes por tipo (`Validador.Tipado.String.pas`, `.Inteiro.pas`, `.Int64.pas`, `.Double.pas`, `.Data.pas`)
+### Fachadas fluentes por tipo (`Validador.Estrito.String.pas`, `.Inteiro.pas`, `.Int64.pas`, `.Double.pas`, `.Data.pas`)
 
 Uma classe concreta por tipo, cada uma só expõe os métodos que fazem
 sentido pro tipo — isso é o que dá a segurança de tipo real (o
@@ -155,7 +155,7 @@ com `MaiorQue`/`MenorQue`/`MaiorOuIgualQue`/`MenorOuIgualQue`/`Entre`/`Igual`
 no lugar dos métodos string-only.
 
 Cada fachada acumula as regras adicionadas (lista interna de
-`IValidacaoTipada<T>`, mesmo espírito do `IExecutorValidador` de hoje) e
+`IValidacaoEstrita<T>`, mesmo espírito do `IExecutorValidador` de hoje) e
 `.Valido` roda todas; `.Mensagem` devolve a mensagem da primeira regra
 que falhar (não é JSON agregado — isso é explicitamente não-objetivo
 aqui).
@@ -195,27 +195,27 @@ src/
     Validador.Tamanho.pas
     Validador.Entre.pas
     Validador.DataString.pas
-  Tipado/
-    Validador.Tipado.Types.pas
-    Validador.Tipado.Base.pas
-    Validador.Tipado.Comparacao.pas
-    Validador.Tipado.Requerido.pas
-    Validador.Tipado.Vazio.pas
-    Validador.Tipado.Regex.pas
-    Validador.Tipado.Email.pas
-    Validador.Tipado.Url.pas
-    Validador.Tipado.CEP.pas
-    Validador.Tipado.Telefone.pas
-    Validador.Tipado.Tamanho.pas
-    Validador.Tipado.CPF.pas
-    Validador.Tipado.CNPJ.pas
-    Validador.Tipado.Enum.pas
-    Validador.Tipado.DataString.pas
-    Validador.Tipado.String.pas
-    Validador.Tipado.Inteiro.pas
-    Validador.Tipado.Int64.pas
-    Validador.Tipado.Double.pas
-    Validador.Tipado.Data.pas
+  Estrito/
+    Validador.Estrito.Types.pas
+    Validador.Estrito.Base.pas
+    Validador.Estrito.Comparacao.pas
+    Validador.Estrito.Requerido.pas
+    Validador.Estrito.Vazio.pas
+    Validador.Estrito.Regex.pas
+    Validador.Estrito.Email.pas
+    Validador.Estrito.Url.pas
+    Validador.Estrito.CEP.pas
+    Validador.Estrito.Telefone.pas
+    Validador.Estrito.Tamanho.pas
+    Validador.Estrito.CPF.pas
+    Validador.Estrito.CNPJ.pas
+    Validador.Estrito.Enum.pas
+    Validador.Estrito.DataString.pas
+    Validador.Estrito.String.pas
+    Validador.Estrito.Inteiro.pas
+    Validador.Estrito.Int64.pas
+    Validador.Estrito.Double.pas
+    Validador.Estrito.Data.pas
 ```
 
 Nenhum nome de `unit` muda — só o caminho físico. `boss.json` continua
@@ -235,7 +235,7 @@ Cada `type`/classe pública da trilha legada ganha `deprecated`:
 
 ```pascal
 TValidacaoCPF = class(TValidacaoBase<Variant>) deprecated
-  'Use Validador.Tipado.CPF (TValidadorString.CPF) — remoção planejada pra v2.0';
+  'Use Validador.Estrito.CPF (TValidadorString.CPF) — remoção planejada pra v2.0';
 ```
 
 Isso emite warning de compilador (W1000 SYMBOL_DEPRECATED) em qualquer
@@ -248,19 +248,19 @@ em `Legado/`.
 
 Mesmo padrão da trilha atual: `Valido: Boolean` não lança, `VerificaErro`
 lança `TValidadorException` (reaproveita a mesma classe de
-`Validador.Types.pas` — não cria uma nova exceção só pra trilha tipada).
+`Validador.Types.pas` — não cria uma nova exceção só pra trilha estrita).
 
 ## Testes
 
-Um `Teste.Validador.Tipado.Xxx.pas` por unit nova em `Test/src/`, mesma
+Um `Teste.Validador.Estrito.Xxx.pas` por unit nova em `Test/src/`, mesma
 matriz `Requerido × Ausente (TNullable.Empty) × Válido × Inválido` já
 usada nos testes da trilha legada. `Test.dproj`/`Test.dpr` ganham as
-novas units (path `Tipado/`).
+novas units (path `Estrito/`).
 
 ## Riscos conhecidos
 
 - `TComparer<T>.Default` sem constraint no genérico: nenhum erro de
-  compilação impede instanciar `TValidacaoTipadaMaiorQue<TObject>`, por
+  compilação impede instanciar `TValidacaoEstritaMaiorQue<TObject>`, por
   exemplo — o comportamento em runtime seria comparação por referência,
   sem sentido pra "maior que". Não há como constranger isso de forma
   limpa nas versões de Delphi alvo (sem `T: IComparable`); fica como

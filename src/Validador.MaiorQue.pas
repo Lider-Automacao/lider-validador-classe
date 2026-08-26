@@ -1,4 +1,4 @@
-unit Validador.MaiorQue;
+﻿unit Validador.MaiorQue;
 
 interface
 
@@ -48,8 +48,8 @@ function TValidacaoMaiorOuIgualQue.Valido: Boolean;
 var
   I: Integer;
 begin
- if VarIsNull(FValue) and not FRequerido then
-    Exit(True);
+  if VarIsNull(FValue) then
+    Exit(not FRequerido);
 
   if VarIsEmpty(FValue) then
     Exit(False);
@@ -84,8 +84,8 @@ function TValidacaoMaiorQue.Valido: Boolean;
 var
   I: Integer;
 begin
- if VarIsNull(FValue) and not FRequerido then
-    Exit(True);
+  if VarIsNull(FValue) then
+    Exit(not FRequerido);
 
   if VarIsEmpty(FValue) then
     Exit(False);

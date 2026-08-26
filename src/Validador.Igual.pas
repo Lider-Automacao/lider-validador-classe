@@ -1,4 +1,4 @@
-unit Validador.Igual;
+﻿unit Validador.Igual;
 
 interface
 
@@ -43,8 +43,8 @@ end;
 
 function TValidacaoIgual.Valido: Boolean;
 begin
- if VarIsNull(FValue) and not FRequerido then
-    Exit(True);
+  if VarIsNull(FValue) then
+    Exit(not FRequerido);
 
   if VarIsStr(FValue) then
     Exit(VarToStr(FValue).trim.length = FComparador);

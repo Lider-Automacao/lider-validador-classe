@@ -1,4 +1,4 @@
-unit Validador.Commons;
+﻿unit Validador.Commons;
 
 interface
 
@@ -28,7 +28,7 @@ uses
      Exit;
 
     if not TRegex.create('^\d+(,\d+){0,}$').IsMatch(aValue.Trim) then
-      raise Exception.create('O array deve conter apenas n�meros inteiros');
+      raise Exception.create('O array deve conter apenas números inteiros');
 
     for vIndex := 0 to Pred(vLength) do
       Result[vIndex] := StrToInt(vOutput[vIndex]);

@@ -1,4 +1,4 @@
-unit Validador.Requerido;
+﻿unit Validador.Requerido;
 
 interface
 
@@ -22,7 +22,7 @@ uses
 
 constructor TValidacaoRequerido.Create;
 begin
-  inherited Create('Obrigat�rio');
+  inherited Create('Obrigatório');
 end;
 
 class function TValidacaoRequerido.New: IValidacao<Variant>;

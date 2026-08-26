@@ -1,4 +1,4 @@
-unit Validador.CNPJ;
+﻿unit Validador.CNPJ;
 
 interface
 
@@ -7,13 +7,14 @@ uses
   Validador.Base;
 
 type
-  TValidacaoCNPJ = class(TValidacaoBase<String>)
+  TValidacaoCNPJ = class(TValidacaoBase<Variant>)
   private
+    function TodosCaracteresIguais(const ACNPJ: string): Boolean;
     function ValidaDigitos(const ACNPJ: string): Boolean;
   public
     constructor Create; reintroduce;
     function Valido: Boolean; override;
-    class function New: IValidacao<String>;
+    class function New: IValidacao<Variant>;
   end;
 
 implementation
@@ -23,9 +24,18 @@ uses
   System.SysUtils,
   System.RegularExpressions;
 
- function TValidacaoCNPJ.ValidaDigitos(const ACNPJ: string): Boolean;
+function TValidacaoCNPJ.TodosCaracteresIguais(const ACNPJ: string): Boolean;
 var
-  LCNPJ: string;
+  I: Integer;
+begin
+  Result := True;
+  for I := 2 to Length(ACNPJ) do
+    if ACNPJ[I] <> ACNPJ[1] then
+      Exit(False);
+end;
+
+function TValidacaoCNPJ.ValidaDigitos(const ACNPJ: string): Boolean;
+var
   LSum: Integer;
   LPeso: Integer;
   I: Integer;
@@ -33,16 +43,9 @@ var
   LDig13: String;
   LDig14: String;
 begin
- if VarIsNull(FValue) and not FRequerido then
-    Exit(True);
-
   Result := False;
 
-  LCNPJ := TRegEx.Replace(ACNPJ, '\D', '');
-
-  if ((LCNPJ = '00000000000000') or (LCNPJ = '11111111111111') or (LCNPJ = '22222222222222') or (LCNPJ = '33333333333333') or
-    (LCNPJ = '44444444444444') or (LCNPJ = '55555555555555') or (LCNPJ = '66666666666666') or (LCNPJ = '77777777777777') or
-    (LCNPJ = '88888888888888') or (LCNPJ = '99999999999999') or (Length(LCNPJ) <> 14)) then
+  if (Length(ACNPJ) <> 14) or TodosCaracteresIguais(ACNPJ) then
     Exit;
 
   try
@@ -51,7 +54,10 @@ begin
 
     for I := 12 downto 1 do
     begin
-      LSum := LSum + (StrToInt(LCNPJ[I]) * LPeso);
+      // CNPJ alfanumerico (rollout RF 2026): peso usa o valor ASCII do
+      // caractere menos 48, nao StrToInt — cobre digitos (0-9) e letras
+      // (A-Z) com a mesma formula.
+      LSum := LSum + ((Ord(ACNPJ[I]) - 48) * LPeso);
       LPeso := LPeso + 1;
 
       if (LPeso = 10) then
@@ -70,7 +76,7 @@ begin
 
     for I := 13 downto 1 do
     begin
-      LSum := LSum + (StrToInt(LCNPJ[I]) * LPeso);
+      LSum := LSum + ((Ord(ACNPJ[I]) - 48) * LPeso);
       LPeso := LPeso + 1;
 
       if (LPeso = 10) then
@@ -84,7 +90,7 @@ begin
     else
       str((11 - LResultSum): 1, LDig14);
 
-    Result := (LDig13 = String(LCNPJ[13])) and (LDig14 = String(LCNPJ[14]));
+    Result := (LDig13 = String(ACNPJ[13])) and (LDig14 = String(ACNPJ[14]));
   except
     Result := False
   end;
@@ -92,17 +98,27 @@ end;
 
 constructor TValidacaoCNPJ.Create;
 begin
- inherited Create('CNPJ Inv�lido');
+ inherited Create('CNPJ Inválido');
 end;
 
-class function TValidacaoCNPJ.New: IValidacao<String>;
+class function TValidacaoCNPJ.New: IValidacao<Variant>;
 begin
   Result := Self.Create;
 end;
 
 function TValidacaoCNPJ.Valido: Boolean;
+var
+  LCNPJ: string;
 begin
-  Result := TRegEx.IsMatch(FValue, '^(\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}|\d{14})$') and ValidaDigitos(FValue);
+  if VarIsNull(FValue) then
+    Exit(not FRequerido);
+
+  // Os digitos verificadores (posicoes 13-14) continuam sempre numericos;
+  // as 12 primeiras posicoes aceitam digito ou letra maiuscula (CNPJ
+  // alfanumerico). Remove so a mascara (.,/,-) antes de validar.
+  LCNPJ := TRegEx.Replace(VarToStr(FValue), '[^0-9A-Za-z]', '').ToUpper;
+
+  Result := TRegEx.IsMatch(LCNPJ, '^[0-9A-Z]{12}\d{2}$') and ValidaDigitos(LCNPJ);
 end;
 
 end.

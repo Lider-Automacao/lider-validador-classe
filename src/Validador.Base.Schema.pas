@@ -1,4 +1,4 @@
-unit Validador.Base.Schema;
+﻿unit Validador.Base.Schema;
 
 interface
 

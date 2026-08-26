@@ -1,4 +1,4 @@
-unit Validador.Regex;
+Ôªøunit Validador.Regex;
 
 interface
 
@@ -8,14 +8,14 @@ uses
   Validador.Base;
 
 type
-  TValidacaoRegex = class(TValidacaoBase<String>)
+  TValidacaoRegex = class(TValidacaoBase<Variant>)
   private
     FRegex: String;
   public
     constructor Create(aRegex: String); reintroduce;
     function Valido: Boolean; override;
-    function Valida(const aValue: String): IValidacao<String>; override;
-    class function New(aRegex: String): IValidacao<String>;
+    function Valida(const aValue: Variant): IValidacao<Variant>; override;
+    class function New(aRegex: String): IValidacao<Variant>;
   end;
 
 implementation
@@ -25,31 +25,31 @@ uses
 
 constructor TValidacaoRegex.Create(aRegex: String);
 begin
-  inherited Create('Valor n„o condiz com o padr„o');
+  inherited Create('Valor n√£o condiz com o padr√£o');
   FRegex := aRegex;
 end;
 
-class function TValidacaoRegex.New(aRegex: String): IValidacao<String>;
+class function TValidacaoRegex.New(aRegex: String): IValidacao<Variant>;
 begin
   Result := Self.Create(aRegex);
 end;
 
-function TValidacaoRegex.Valida(const aValue: String): IValidacao<String>;
+function TValidacaoRegex.Valida(const aValue: Variant): IValidacao<Variant>;
 begin
   Result := Self;
   inherited Valida(aValue);
-  FMensagem := Format('Valor %s condiz com o padr„o %s',[VarToStr(FValue),FRegex])
+  FMensagem := Format('Valor %s condiz com o padr√£o %s',[VarToStr(FValue),FRegex])
 end;
 
 function TValidacaoRegex.Valido: Boolean;
 begin
- if VarIsNull(FValue) and not FRequerido then
+  if VarIsNull(FValue) then
+    Exit(not FRequerido);
+
+ if (VarToStr(FValue).Trim = '') and not FRequerido then
     Exit(True);
 
- if (FValue.Trim = '') and not FRequerido then
-    Exit(True);
-
-  Result := TRegex.create(FRegex).IsMatch(FValue);
+  Result := TRegex.create(FRegex).IsMatch(VarToStr(FValue));
 end;
 
 

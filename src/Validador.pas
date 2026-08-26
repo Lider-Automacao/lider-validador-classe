@@ -1,4 +1,4 @@
-unit Validador;
+﻿unit Validador;
 
 interface
 
@@ -30,6 +30,15 @@ type
     function CPF(aMensagem : string = ''): IValidador;
     function CNPJ(aMensagem : string = ''): IValidador;
 
+    function Email(aMensagem : string = ''): IValidador;
+    function Url(aMensagem : string = ''): IValidador;
+    function Telefone(aMensagem : string = ''): IValidador;
+    function Celular(aMensagem : string = ''): IValidador;
+    function CEP(aMensagem : string = ''): IValidador;
+    function TamanhoMinimo(aTamanho: Integer; aMensagem : string = ''): IValidador;
+    function TamanhoMaximo(aTamanho: Integer; aMensagem : string = ''): IValidador;
+    function Entre(aMinimo, aMaximo: Variant; aMensagem : string = ''): IValidador;
+
     function &End: IValidadorAdd;
   end;
 
@@ -40,7 +49,7 @@ type
   end;
 
   IValidadorAdd = interface
-    ['{07439CC1-095B-4F4B-9B1F-6B6324E3AF78}']
+    ['{D643A2CE-0065-41C8-9623-7B95B5FCC4A0}']
     function Personalizada(aValidacao: IValidacaoBase): IValidadorAdd;
     function Add(aPropriedede: string; aValue: variant): INullValidador;
     function Executa: IExecutorValidador;
@@ -79,6 +88,15 @@ type
     function CPF(aMensagem : string = ''): IValidador;
     function CNPJ(aMensagem : string = ''): IValidador;
 
+    function Email(aMensagem : string = ''): IValidador;
+    function Url(aMensagem : string = ''): IValidador;
+    function Telefone(aMensagem : string = ''): IValidador;
+    function Celular(aMensagem : string = ''): IValidador;
+    function CEP(aMensagem : string = ''): IValidador;
+    function TamanhoMinimo(aTamanho: Integer; aMensagem : string = ''): IValidador;
+    function TamanhoMaximo(aTamanho: Integer; aMensagem : string = ''): IValidador;
+    function Entre(aMinimo, aMaximo: Variant; aMensagem : string = ''): IValidador;
+
     function &End: IValidadorAdd;
 
     constructor Create;
@@ -95,7 +113,14 @@ uses
   Validador.MaiorQue,
   Validador.MenorQue,
   Validador.CPF ,
-  Validador.CNPJ;
+  Validador.CNPJ,
+  Validador.Email,
+  Validador.Url,
+  Validador.Telefone,
+  Validador.CEP,
+  Validador.Tamanho,
+  Validador.Entre,
+  Validador.DataString;
 
 
 function TValidador.Add(aPropriedede: string; aValue: variant): INullValidador;
@@ -122,13 +147,13 @@ end;
 
 function TValidador.CNPJ(aMensagem: string): IValidador;
 begin
-  FValidador.Add(TValidacaoCNPJ.New.Valida(FValue).Propriedade(FPropriedede).Requerido(FRequerido));
+  FValidador.Add(TValidacaoCNPJ.New.Valida(FValue).Propriedade(FPropriedede).Mensagem(aMensagem).Requerido(FRequerido));
   Result := Self;
 end;
 
 function TValidador.CPF(aMensagem: string): IValidador;
 begin
-  FValidador.Add(TValidacaoCPF.New.Valida(FValue).Propriedade(FPropriedede).Requerido(FRequerido));
+  FValidador.Add(TValidacaoCPF.New.Valida(FValue).Propriedade(FPropriedede).Mensagem(aMensagem).Requerido(FRequerido));
   Result := Self;
 end;
 
@@ -138,14 +163,57 @@ begin
 end;
 
 function TValidador.DataString(aMensagem: string): IValidador;
-const
- REGEX_DATA =
-      '^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)'+
-      '(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)'+
-      '0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|'+
-      '^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$';
 begin
-  Result := Regex(REGEX_DATA, aMensagem);
+  FValidador.Add(TValidacaoDataString.New.Valida(FValue).Propriedade(FPropriedede).Mensagem(aMensagem).Requerido(FRequerido));
+  Result := Self;
+end;
+
+function TValidador.Email(aMensagem: string): IValidador;
+begin
+  FValidador.Add(TValidacaoEmail.New.Valida(FValue).Propriedade(FPropriedede).Mensagem(aMensagem).Requerido(FRequerido));
+  Result := Self;
+end;
+
+function TValidador.Url(aMensagem: string): IValidador;
+begin
+  FValidador.Add(TValidacaoUrl.New.Valida(FValue).Propriedade(FPropriedede).Mensagem(aMensagem).Requerido(FRequerido));
+  Result := Self;
+end;
+
+function TValidador.Telefone(aMensagem: string): IValidador;
+begin
+  FValidador.Add(TValidacaoTelefone.New.Valida(FValue).Propriedade(FPropriedede).Mensagem(aMensagem).Requerido(FRequerido));
+  Result := Self;
+end;
+
+function TValidador.Celular(aMensagem: string): IValidador;
+begin
+  FValidador.Add(TValidacaoCelular.New.Valida(FValue).Propriedade(FPropriedede).Mensagem(aMensagem).Requerido(FRequerido));
+  Result := Self;
+end;
+
+function TValidador.CEP(aMensagem: string): IValidador;
+begin
+  FValidador.Add(TValidacaoCEP.New.Valida(FValue).Propriedade(FPropriedede).Mensagem(aMensagem).Requerido(FRequerido));
+  Result := Self;
+end;
+
+function TValidador.TamanhoMinimo(aTamanho: Integer; aMensagem: string): IValidador;
+begin
+  FValidador.Add(TValidacaoTamanhoMinimo.New(aTamanho).Valida(FValue).Propriedade(FPropriedede).Mensagem(aMensagem).Requerido(FRequerido));
+  Result := Self;
+end;
+
+function TValidador.TamanhoMaximo(aTamanho: Integer; aMensagem: string): IValidador;
+begin
+  FValidador.Add(TValidacaoTamanhoMaximo.New(aTamanho).Valida(FValue).Propriedade(FPropriedede).Mensagem(aMensagem).Requerido(FRequerido));
+  Result := Self;
+end;
+
+function TValidador.Entre(aMinimo, aMaximo: Variant; aMensagem: string): IValidador;
+begin
+  FValidador.Add(TValidacaoEntre.New(aMinimo, aMaximo).Valida(FValue).Propriedade(FPropriedede).Mensagem(aMensagem).Requerido(FRequerido));
+  Result := Self;
 end;
 
 function TValidador.Executa: IExecutorValidador;

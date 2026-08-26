@@ -1,4 +1,4 @@
-unit Validador.Types;
+﻿unit Validador.Types;
 
 interface
 
@@ -54,8 +54,7 @@ type
 implementation
 
 uses
-  System.JSON.Writers,
-  System.JSON.Types,
+  System.JSON,
   System.StrUtils,
   System.Variants;
 
@@ -82,18 +81,16 @@ function TExecutorValidador.Errors: String;
 var
   vContador: integer;
   vValidacao: IValidacaoBase;
-  vStringWriter: TStringWriter;
-  vJsonTextWriter: TJsonTextWriter;
+  vErros: TJSONArray;
+  vErro: TJSONObject;
+  vErroAninhado: TJSONValue;
   vErrorCount: integer;
 begin
   Result := '';
   vErrorCount := 0;
 
-  vStringWriter := TStringWriter.Create;
-  vJsonTextWriter := TJsonTextWriter.Create(vStringWriter);
-
+  vErros := TJSONArray.Create;
   try
-    vJsonTextWriter.WriteStartArray;
     for vContador := 0 to Pred(FValidacoes.Count) do
     begin
       vValidacao := IValidacaoBase(FValidacoes[vContador]);
@@ -104,31 +101,32 @@ begin
         if Trim(vValidacao.Mensagem).IsEmpty then
           Continue;
 
-        vJsonTextWriter.WriteStartObject;
-        vJsonTextWriter.WritePropertyName('field');
-        vJsonTextWriter.WriteValue(vValidacao.Propriedade);
-        vJsonTextWriter.WritePropertyName('error');
+        vErro := TJSONObject.Create;
+        vErro.AddPair('field', vValidacao.Propriedade);
 
         if vValidacao.Mensagem.StartsWith('{') or
           vValidacao.Mensagem.StartsWith('[') then
-          vJsonTextWriter.WriteRaw(vValidacao.Mensagem)
+        begin
+          vErroAninhado := TJSONObject.ParseJSONValue(vValidacao.Mensagem);
+          if Assigned(vErroAninhado) then
+            vErro.AddPair('error', vErroAninhado)
+          else
+            vErro.AddPair('error', vValidacao.Mensagem);
+        end
         else
-          vJsonTextWriter.WriteValue(vValidacao.Mensagem);
+          vErro.AddPair('error', vValidacao.Mensagem);
 
-        vJsonTextWriter.WriteEndObject;
+        vErros.Add(vErro);
       end;
     end;
-
-    vJsonTextWriter.WriteEndArray;
 
     if vErrorCount = 0 then
       Exit('');
 
-    Result := vStringWriter.ToString.Replace('null','');
+    Result := vErros.ToJSON;
 
   finally
-    FreeAndNil(vJsonTextWriter);
-    FreeAndNil(vStringWriter);
+    vErros.Free;
   end;
 end;
 
