@@ -46,6 +46,9 @@ begin
   if VarIsNull(FValue) then
     Exit(not FRequerido);
 
+  if VarIsStr(FValue) and VarIsStr(FComparador) then
+    Exit(VarToStr(FValue).Trim = VarToStr(FComparador).Trim);
+
   if VarIsStr(FValue) then
     Exit(VarToStr(FValue).trim.length = FComparador);
 
