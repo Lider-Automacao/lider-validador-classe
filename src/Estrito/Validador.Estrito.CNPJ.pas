@@ -94,7 +94,7 @@ end;
 
 constructor TValidacaoEstritaCNPJ.Create;
 begin
-  inherited Create('CNPJ inválido');
+  inherited Create('CNPJ Inválido');
 end;
 
 class function TValidacaoEstritaCNPJ.New: IValidacaoEstrita<string>;

@@ -37,9 +37,44 @@ type
     procedure Test_Igual_ValoresDiferentes_RetornaFalse;
     [Test]
     procedure Test_MaiorQue_ComDouble_RetornaTrue;
+    [Test]
+    procedure Test_MaiorQue_MensagemPadrao_CitaOValorComoOLegado;
+    [Test]
+    procedure Test_MaiorOuIgualQue_MensagemPadrao_CitaOValorComoOLegado;
+    [Test]
+    procedure Test_MenorQue_MensagemPadrao_CitaOValorComoOLegado;
+    [Test]
+    procedure Test_MenorOuIgualQue_MensagemPadrao_CitaOValorComoOLegado;
+    [Test]
+    procedure Test_Entre_MensagemPadrao_CitaOsLimitesComoOLegado;
   end;
 
 implementation
+
+procedure TTesteComparacaoEstrita.Test_MaiorQue_MensagemPadrao_CitaOValorComoOLegado;
+begin
+  Assert.AreEqual('Deve ser maior que 10', TValidacaoEstritaMaiorQue<Integer>.New(10).Mensagem);
+end;
+
+procedure TTesteComparacaoEstrita.Test_MaiorOuIgualQue_MensagemPadrao_CitaOValorComoOLegado;
+begin
+  Assert.AreEqual('Deve ser maior ou igual que 0', TValidacaoEstritaMaiorOuIgualQue<Double>.New(0).Mensagem);
+end;
+
+procedure TTesteComparacaoEstrita.Test_MenorQue_MensagemPadrao_CitaOValorComoOLegado;
+begin
+  Assert.AreEqual('Deve ser menor que 5', TValidacaoEstritaMenorQue<Integer>.New(5).Mensagem);
+end;
+
+procedure TTesteComparacaoEstrita.Test_MenorOuIgualQue_MensagemPadrao_CitaOValorComoOLegado;
+begin
+  Assert.AreEqual('Deve ser menor ou igual que 100', TValidacaoEstritaMenorOuIgualQue<Integer>.New(100).Mensagem);
+end;
+
+procedure TTesteComparacaoEstrita.Test_Entre_MensagemPadrao_CitaOsLimitesComoOLegado;
+begin
+  Assert.AreEqual('Deve estar entre 1 e 120', TValidacaoEstritaEntre<Integer>.New(1, 120).Mensagem);
+end;
 
 procedure TTesteComparacaoEstrita.Test_MaiorQue_ValorMaior_RetornaTrue;
 var

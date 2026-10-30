@@ -65,13 +65,15 @@ type
 implementation
 
 uses
+  System.SysUtils,
+  System.Rtti,
   System.Generics.Defaults;
 
 { TValidacaoEstritaMaiorQue<T> }
 
 constructor TValidacaoEstritaMaiorQue<T>.Create(const aComparador: T);
 begin
-  inherited Create('Deve ser maior que o valor informado');
+  inherited Create(Format('Deve ser maior que %s', [TValue.From<T>(aComparador).ToString]));
   FComparador := aComparador;
 end;
 
@@ -91,7 +93,7 @@ end;
 
 constructor TValidacaoEstritaMaiorOuIgualQue<T>.Create(const aComparador: T);
 begin
-  inherited Create('Deve ser maior ou igual ao valor informado');
+  inherited Create(Format('Deve ser maior ou igual que %s', [TValue.From<T>(aComparador).ToString]));
   FComparador := aComparador;
 end;
 
@@ -111,7 +113,7 @@ end;
 
 constructor TValidacaoEstritaMenorQue<T>.Create(const aComparador: T);
 begin
-  inherited Create('Deve ser menor que o valor informado');
+  inherited Create(Format('Deve ser menor que %s', [TValue.From<T>(aComparador).ToString]));
   FComparador := aComparador;
 end;
 
@@ -131,7 +133,7 @@ end;
 
 constructor TValidacaoEstritaMenorOuIgualQue<T>.Create(const aComparador: T);
 begin
-  inherited Create('Deve ser menor ou igual ao valor informado');
+  inherited Create(Format('Deve ser menor ou igual que %s', [TValue.From<T>(aComparador).ToString]));
   FComparador := aComparador;
 end;
 
@@ -151,7 +153,7 @@ end;
 
 constructor TValidacaoEstritaEntre<T>.Create(const aMinimo, aMaximo: T);
 begin
-  inherited Create('Deve estar dentro do intervalo permitido');
+  inherited Create(Format('Deve estar entre %s e %s', [TValue.From<T>(aMinimo).ToString, TValue.From<T>(aMaximo).ToString]));
   FMinimo := aMinimo;
   FMaximo := aMaximo;
 end;
