@@ -37,6 +37,7 @@ type
     function EsquemaEndereco: IEsquema<TEnderecoTeste>;
     function EsquemaItem: IEsquema<TItemTeste>;
     function EsquemaPessoa: IEsquema<TPessoaTeste>;
+    function EsquemaSimples: IEsquema<TPessoaTeste>;
   public
     [Setup]
     procedure Setup;
@@ -66,6 +67,12 @@ type
     procedure Test_VerificaErro_ComErros_LevantaExcecaoComJson;
     [Test]
     procedure Test_Valida_MesmoEsquemaDuasVezes_NaoCarregaEstado;
+    [Test]
+    procedure Test_CampoSimples_ObjetoCorreto_RetornaValido;
+    [Test]
+    procedure Test_CampoSimples_VariosCamposInvalidos_RetornaTodosOsErros;
+    [Test]
+    procedure Test_CampoSimples_CampoInvalido_UsaNomeDoCampoComoCaminho;
   end;
 
 implementation
@@ -74,7 +81,32 @@ const
   C_JSON_NOME_E_IDADE =
     '[{"field":"nome","error":"Nome obrigat\u00F3rio"},{"field":"idade","error":"Idade inv\u00E1lida"}]';
 
-function TTesteEsquema.EsquemaEndereco: IEsquema<TEnderecoTeste>;
+function TextoObrigatorio: IValidadorString;
+begin
+  Result := TValidadorString.New.Requerido('Nome obrigatório').NaoVazio('Nome obrigatório');
+end;
+
+function IdadeValida: IValidadorDouble;
+begin
+  Result := TValidadorDouble.New.Requerido.Entre(0, 120, 'Idade inválida');
+end;
+
+function TTesteEsquema.EsquemaSimples: IEsquema<TPessoaTeste>;
+begin
+  Result := TEsquema<TPessoaTeste>.New
+    .CampoTexto('nome',
+      function(APessoa: TPessoaTeste): string
+      begin
+        Result := APessoa.Nome;
+      end, TextoObrigatorio)
+    .CampoReal('idade',
+      function(APessoa: TPessoaTeste): Double
+      begin
+        Result := APessoa.Idade;
+      end, IdadeValida);
+end;
+
+function TTesteEsquema.EsquemaEndereco:IEsquema<TEnderecoTeste>;
 begin
   Result := TEsquema<TEnderecoTeste>.New
     .Campo('rua',
@@ -254,6 +286,24 @@ begin
   LEsquema.Valida(FPessoa);
   FPessoa.Nome := 'Maria';
   Assert.IsTrue(LEsquema.Valida(FPessoa).Valido);
+end;
+
+procedure TTesteEsquema.Test_CampoSimples_ObjetoCorreto_RetornaValido;
+begin
+  Assert.IsTrue(EsquemaSimples.Valida(FPessoa).Valido);
+end;
+
+procedure TTesteEsquema.Test_CampoSimples_VariosCamposInvalidos_RetornaTodosOsErros;
+begin
+  FPessoa.Nome := '';
+  FPessoa.Idade := 200;
+  Assert.AreEqual(C_JSON_NOME_E_IDADE, EsquemaSimples.Valida(FPessoa).ComoJson);
+end;
+
+procedure TTesteEsquema.Test_CampoSimples_CampoInvalido_UsaNomeDoCampoComoCaminho;
+begin
+  FPessoa.Idade := -1;
+  Assert.AreEqual('idade', EsquemaSimples.Valida(FPessoa).Erros[0].Caminho);
 end;
 
 initialization

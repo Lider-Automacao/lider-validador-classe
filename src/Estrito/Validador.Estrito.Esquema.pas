@@ -61,6 +61,16 @@ type
       const aValidador: TFunc<IValidadorInt64>): IEsquema<T>; overload;
     function Campo(const aNome: string; const aLeitor: TFunc<T, TNullable<TDateTime>>;
       const aValidador: TFunc<IValidadorData>): IEsquema<T>; overload;
+    function CampoTexto(const aNome: string; const aLeitor: TFunc<T, string>;
+      const aValidador: TFunc<IValidadorString>): IEsquema<T>;
+    function CampoReal(const aNome: string; const aLeitor: TFunc<T, Double>;
+      const aValidador: TFunc<IValidadorDouble>): IEsquema<T>;
+    function CampoInteiro(const aNome: string; const aLeitor: TFunc<T, Integer>;
+      const aValidador: TFunc<IValidadorInteiro>): IEsquema<T>;
+    function CampoInt64(const aNome: string; const aLeitor: TFunc<T, Int64>;
+      const aValidador: TFunc<IValidadorInt64>): IEsquema<T>;
+    function CampoData(const aNome: string; const aLeitor: TFunc<T, TDateTime>;
+      const aValidador: TFunc<IValidadorData>): IEsquema<T>;
     function Regra(const aRegra: IRegraCampo<T>): IEsquema<T>;
     function Valida(const aObjeto: T): IResultadoEsquema;
   end;
@@ -92,6 +102,16 @@ type
       const aValidador: TFunc<IValidadorInt64>): IEsquema<T>; overload;
     function Campo(const aNome: string; const aLeitor: TFunc<T, TNullable<TDateTime>>;
       const aValidador: TFunc<IValidadorData>): IEsquema<T>; overload;
+    function CampoTexto(const aNome: string; const aLeitor: TFunc<T, string>;
+      const aValidador: TFunc<IValidadorString>): IEsquema<T>;
+    function CampoReal(const aNome: string; const aLeitor: TFunc<T, Double>;
+      const aValidador: TFunc<IValidadorDouble>): IEsquema<T>;
+    function CampoInteiro(const aNome: string; const aLeitor: TFunc<T, Integer>;
+      const aValidador: TFunc<IValidadorInteiro>): IEsquema<T>;
+    function CampoInt64(const aNome: string; const aLeitor: TFunc<T, Int64>;
+      const aValidador: TFunc<IValidadorInt64>): IEsquema<T>;
+    function CampoData(const aNome: string; const aLeitor: TFunc<T, TDateTime>;
+      const aValidador: TFunc<IValidadorData>): IEsquema<T>;
     function Regra(const aRegra: IRegraCampo<T>): IEsquema<T>;
     function Valida(const aObjeto: T): IResultadoEsquema;
     procedure Coleta(const aObjeto: T; const aPrefixo: string; const aErros: TList<TErroCampo>);
@@ -318,6 +338,56 @@ begin
       else
         Result := LValidador.Mensagem;
     end);
+end;
+
+function TEsquema<T>.CampoTexto(const aNome: string; const aLeitor: TFunc<T, string>;
+  const aValidador: TFunc<IValidadorString>): IEsquema<T>;
+begin
+  Result := Campo(aNome,
+    function(aObjeto: T): TNullable<string>
+    begin
+      Result := aLeitor(aObjeto);
+    end, aValidador);
+end;
+
+function TEsquema<T>.CampoReal(const aNome: string; const aLeitor: TFunc<T, Double>;
+  const aValidador: TFunc<IValidadorDouble>): IEsquema<T>;
+begin
+  Result := Campo(aNome,
+    function(aObjeto: T): TNullable<Double>
+    begin
+      Result := aLeitor(aObjeto);
+    end, aValidador);
+end;
+
+function TEsquema<T>.CampoInteiro(const aNome: string; const aLeitor: TFunc<T, Integer>;
+  const aValidador: TFunc<IValidadorInteiro>): IEsquema<T>;
+begin
+  Result := Campo(aNome,
+    function(aObjeto: T): TNullable<Integer>
+    begin
+      Result := aLeitor(aObjeto);
+    end, aValidador);
+end;
+
+function TEsquema<T>.CampoInt64(const aNome: string; const aLeitor: TFunc<T, Int64>;
+  const aValidador: TFunc<IValidadorInt64>): IEsquema<T>;
+begin
+  Result := Campo(aNome,
+    function(aObjeto: T): TNullable<Int64>
+    begin
+      Result := aLeitor(aObjeto);
+    end, aValidador);
+end;
+
+function TEsquema<T>.CampoData(const aNome: string; const aLeitor: TFunc<T, TDateTime>;
+  const aValidador: TFunc<IValidadorData>): IEsquema<T>;
+begin
+  Result := Campo(aNome,
+    function(aObjeto: T): TNullable<TDateTime>
+    begin
+      Result := aLeitor(aObjeto);
+    end, aValidador);
 end;
 
 procedure TEsquema<T>.Coleta(const aObjeto: T; const aPrefixo: string; const aErros: TList<TErroCampo>);

@@ -106,6 +106,24 @@ if not LResultado.Valido then
   LResultado.VerificaErro; // EValidadorEsquema, mensagem = JSON de erros
 ```
 
+Para propriedades que nunca são nulas, `CampoTexto`, `CampoReal`, `CampoInteiro`,
+`CampoInt64` e `CampoData` aceitam o leitor com o tipo simples, e a fábrica pode
+ser uma função global reaproveitada em vários campos:
+
+```pascal
+function NomeObrigatorio: IValidadorString;
+begin
+  Result := TValidadorString.New.Requerido('Nome obrigatório').NaoVazio('Nome obrigatório');
+end;
+
+LEsquema := TEsquema<TPessoa>.New
+  .CampoTexto('nome',
+    function(APessoa: TPessoa): string
+    begin
+      Result := APessoa.Nome;
+    end, NomeObrigatorio);
+```
+
 - `Erros` devolve `TArray<TErroCampo>` (`Caminho`, `Mensagem`), com caminhos
   como `endereco.numero` e `itens[1].codigo`.
 - `ComoJson` devolve `[{"field":"...","error":"..."}]`, o mesmo formato do
