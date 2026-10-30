@@ -94,6 +94,7 @@
     <DCCReference Include="..\src\Estrito\Validador.Estrito.CPF.pas"/>
     <DCCReference Include="..\src\Estrito\Validador.Estrito.CNPJ.pas"/>
     <DCCReference Include="..\src\Estrito\Validador.Estrito.Objeto.pas"/>
+    <DCCReference Include="..\src\Estrito\Validador.Estrito.Esquema.pas"/>
     <DCCReference Include="..\src\Estrito\Validador.Estrito.Strings.pas"/>
     <DCCReference Include="..\src\Estrito\Validador.Estrito.Inteiro.pas"/>
     <DCCReference Include="..\src\Estrito\Validador.Estrito.Int64.pas"/>
@@ -137,6 +138,7 @@
     <DCCReference Include="src\Teste.Validador.Estrito.CPF.pas"/>
     <DCCReference Include="src\Teste.Validador.Estrito.CNPJ.pas"/>
     <DCCReference Include="src\Teste.Validador.Estrito.Objeto.pas"/>
+    <DCCReference Include="src\Teste.Validador.Estrito.Esquema.pas"/>
     <DCCReference Include="src\Teste.Validador.Estrito.Strings.pas"/>
     <DCCReference Include="src\Teste.Validador.Estrito.Inteiro.pas"/>
     <DCCReference Include="src\Teste.Validador.Estrito.Int64.pas"/>

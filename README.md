@@ -59,10 +59,60 @@ projeto).
     raise Exception.Create('CPF inválido');
   ```
 
-  Valida **um valor por vez** (não agrega múltiplos campos num JSON como
-  o `TValidador` legado) — ver
-  `docs/superpowers/specs/2026-08-26-trilha-estrita-design.md` pro design
-  completo.
+  Cada validador estrito valida **um valor por vez**. Para validar um
+  objeto inteiro e receber todos os erros de uma vez, use o esquema
+  (próxima seção). Design completo em
+  `docs/superpowers/specs/2026-08-26-trilha-estrita-design.md`.
+
+### Esquema de objeto (`Validador.Estrito.Esquema`)
+
+Descreve a forma do objeto uma vez e devolve todos os erros, cada um com o
+caminho do campo (comportamento parecido com o zod). O esquema é montado uma
+vez e pode ser reutilizado; o validador de cada campo entra como fábrica
+porque os validadores estritos guardam o valor entre `Valida` e `Valido`.
+
+```pascal
+uses
+  Validador.Estrito.Types,
+  Validador.Estrito.Strings,
+  Validador.Estrito.Double,
+  Validador.Estrito.Esquema;
+
+LEsquema := TEsquema<TPessoa>.New
+  .Campo('nome',
+    function(APessoa: TPessoa): TNullable<string>
+    begin
+      Result := APessoa.Nome;
+    end,
+    function: IValidadorString
+    begin
+      Result := TValidadorString.New.Requerido('Nome obrigatório').NaoVazio('Nome obrigatório');
+    end)
+  .Regra(TCampoObjeto<TPessoa, TEndereco>.New('endereco',
+    function(APessoa: TPessoa): TEndereco
+    begin
+      Result := APessoa.Endereco;
+    end,
+    LEsquemaEndereco))
+  .Regra(TCampoLista<TPessoa, TItem>.New('itens',
+    function(APessoa: TPessoa): TArray<TItem>
+    begin
+      Result := APessoa.Itens;
+    end,
+    LEsquemaItem));
+
+LResultado := LEsquema.Valida(LPessoa);
+if not LResultado.Valido then
+  LResultado.VerificaErro; // EValidadorEsquema, mensagem = JSON de erros
+```
+
+- `Erros` devolve `TArray<TErroCampo>` (`Caminho`, `Mensagem`), com caminhos
+  como `endereco.numero` e `itens[1].codigo`.
+- `ComoJson` devolve `[{"field":"...","error":"..."}]`, o mesmo formato do
+  `Errors` do legado, e texto vazio quando válido.
+- Campos aceitos em `Campo`: texto, `Double`, `Integer`, `Int64` e
+  `TDateTime`. Objeto aninhado e lista entram por `Regra`.
+- Objeto aninhado `nil` e lista vazia não geram erro.
 
 ## Uso básico (trilha legada)
 
