@@ -62,6 +62,17 @@ type
     class function New(const aComparador: T): IValidacaoEstrita<T>;
   end;
 
+  TValidacaoEstritaIgualTexto = class(TValidacaoEstritaBase<string>)
+  private
+    FComparador: string;
+    FMensagemFixa: string;
+  public
+    constructor Create(const aComparador, aMensagem: string); reintroduce;
+    function Valida(const aValue: TNullable<string>): IValidacaoEstrita<string>; override;
+    function Valido: Boolean; override;
+    class function New(const aComparador, aMensagem: string): IValidacaoEstrita<string>;
+  end;
+
 implementation
 
 uses
@@ -189,6 +200,36 @@ begin
   if not FValue.HasValue then
     Exit(not FRequerido);
   Result := TComparer<T>.Default.Compare(FValue.Value, FComparador) = 0;
+end;
+
+{ TValidacaoEstritaIgualTexto }
+
+constructor TValidacaoEstritaIgualTexto.Create(const aComparador, aMensagem: string);
+begin
+  inherited Create('Os valores devem ser iguais');
+  FComparador := aComparador;
+  FMensagemFixa := aMensagem;
+end;
+
+class function TValidacaoEstritaIgualTexto.New(const aComparador, aMensagem: string): IValidacaoEstrita<string>;
+begin
+  Result := Self.Create(aComparador, aMensagem);
+end;
+
+function TValidacaoEstritaIgualTexto.Valida(const aValue: TNullable<string>): IValidacaoEstrita<string>;
+begin
+  Result := inherited Valida(aValue);
+  if not FMensagemFixa.IsEmpty then
+    FMensagem := FMensagemFixa
+  else if aValue.HasValue then
+    FMensagem := Format('valor %s deve ser igual a %s', [aValue.Value, FComparador]);
+end;
+
+function TValidacaoEstritaIgualTexto.Valido: Boolean;
+begin
+  if not FValue.HasValue then
+    Exit(not FRequerido);
+  Result := FValue.Value.Trim = FComparador.Trim;
 end;
 
 end.

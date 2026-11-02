@@ -184,6 +184,7 @@ são aplicadas quando o campo de fato tem valor.
 | `Telefone` / `Celular` | telefone fixo (DDD + 8 dígitos) ou celular (DDD + 9 dígitos, com o 9 líder) |
 | `CEP` | CEP brasileiro (`00000-000` ou `00000000`) |
 | `TamanhoMinimo(n)` / `TamanhoMaximo(n)` | comprimento mínimo/máximo de string |
+| `Igual(aComparacao)` (`IValidadorString`) | texto igual ao comparado, ignorando espaços nas pontas |
 | `Personalizada(aValidacao)` | injeta qualquer `IValidacaoBase` próprio na cadeia |
 
 Todo método aceita uma mensagem customizada opcional; sem ela, cada regra

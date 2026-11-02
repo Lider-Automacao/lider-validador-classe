@@ -21,6 +21,12 @@ type
     procedure Test_Valido_CPFInvalido_RetornaFalse;
     [Test]
     procedure Test_Mensagem_PrimeiraFalhaEhARetornada;
+    [Test]
+    procedure Test_Igual_ValorIgualComEspacos_RetornaTrue;
+    [Test]
+    procedure Test_Igual_ValorDiferente_UsaMensagemDoLegado;
+    [Test]
+    procedure Test_Igual_ValorDiferenteComMensagem_UsaMensagemInformada;
   end;
 
 implementation
@@ -43,6 +49,29 @@ end;
 procedure TTesteValidadorString.Test_Valido_CPFInvalido_RetornaFalse;
 begin
   Assert.IsFalse(TValidadorString.New.Requerido.CPF.Valida('111.111.111-11').Valido);
+end;
+
+procedure TTesteValidadorString.Test_Igual_ValorIgualComEspacos_RetornaTrue;
+begin
+  Assert.IsTrue(TValidadorString.New.Requerido.Igual('00').Valida(' 00 ').Valido);
+end;
+
+procedure TTesteValidadorString.Test_Igual_ValorDiferente_UsaMensagemDoLegado;
+var
+  LValidador: IValidadorString;
+begin
+  LValidador := TValidadorString.New.Requerido.Igual('00').Valida('10');
+  LValidador.Valido;
+  Assert.AreEqual('valor 10 deve ser igual a 00', LValidador.Mensagem);
+end;
+
+procedure TTesteValidadorString.Test_Igual_ValorDiferenteComMensagem_UsaMensagemInformada;
+var
+  LValidador: IValidadorString;
+begin
+  LValidador := TValidadorString.New.Requerido.Igual('00', 'CST inválido').Valida('10');
+  LValidador.Valido;
+  Assert.AreEqual('CST inválido', LValidador.Mensagem);
 end;
 
 procedure TTesteValidadorString.Test_Mensagem_PrimeiraFalhaEhARetornada;

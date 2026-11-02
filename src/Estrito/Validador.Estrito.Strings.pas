@@ -26,6 +26,7 @@ type
     function CNPJ(aMensagem: string = ''): IValidadorString;
     function Enum(const aEnum: TArray<string>; aMensagem: string = ''): IValidadorString;
     function DataString(aMensagem: string = ''): IValidadorString;
+    function Igual(const aComparacao: string; aMensagem: string = ''): IValidadorString;
 
     function Valida(const aValor: TNullable<string>): IValidadorString;
     function Valido: Boolean;
@@ -59,6 +60,7 @@ type
     function CNPJ(aMensagem: string = ''): IValidadorString;
     function Enum(const aEnum: TArray<string>; aMensagem: string = ''): IValidadorString;
     function DataString(aMensagem: string = ''): IValidadorString;
+    function Igual(const aComparacao: string; aMensagem: string = ''): IValidadorString;
 
     function Valida(const aValor: TNullable<string>): IValidadorString;
     function Valido: Boolean;
@@ -79,7 +81,8 @@ uses
   Validador.Estrito.CPF,
   Validador.Estrito.CNPJ,
   Validador.Estrito.Enum,
-  Validador.Estrito.DataString;
+  Validador.Estrito.DataString,
+  Validador.Estrito.Comparacao;
 
 constructor TValidadorString.Create;
 begin
@@ -192,6 +195,12 @@ end;
 function TValidadorString.DataString(aMensagem: string): IValidadorString;
 begin
   FRegras.Add(TValidacaoEstritaDataString.New.Mensagem(aMensagem).Requerido(FRequerido));
+  Result := Self;
+end;
+
+function TValidadorString.Igual(const aComparacao: string; aMensagem: string): IValidadorString;
+begin
+  FRegras.Add(TValidacaoEstritaIgualTexto.New(aComparacao, aMensagem).Requerido(FRequerido));
   Result := Self;
 end;
 
